@@ -57,17 +57,6 @@ exports.signupEmail = name => {
   return message;
 };
 
-exports.newsletterSubscriptionEmail = () => {
-  const message = {
-    subject: 'Newsletter Subscription',
-    text:
-      `You are receiving this email because you subscribed to our newsletter. \n\n` +
-      `If you did not request this change, please contact us immediately.`
-  };
-
-  return message;
-};
-
 exports.contactEmail = () => {
   const message = {
     subject: 'Contact Us',
@@ -79,7 +68,7 @@ exports.contactEmail = () => {
 
 exports.merchantApplicationEmail = () => {
   const message = {
-    subject: 'Sell on MERN Store',
+    subject: 'Sell on Marketlane',
     text: `We received your request! Our team will contact you soon. \n\n`
   };
 
@@ -88,7 +77,7 @@ exports.merchantApplicationEmail = () => {
 
 exports.merchantDeactivateAccount = () => {
   const message = {
-    subject: 'Merchant account on MERN Store',
+    subject: 'Merchant account on Marketlane',
     text:
       `Your merchant account has been disabled. \n\n` +
       `Please contact admin to request access again.`

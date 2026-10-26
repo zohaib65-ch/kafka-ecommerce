@@ -13,9 +13,10 @@ An ecommerce store built with MERN stack, and utilizes third party API's. This e
   * Node provides the backend environment for this application
   * Express middleware is used to handle requests, routes
   * Mongoose schemas to model the application data
-  * React for displaying UI components
-  * Redux to manage application's state
-  * Redux Thunk middleware to handle asynchronous redux actions
+  * Next.js (App Router) and React for the storefront and dashboards, written in TypeScript
+  * Tailwind CSS and shadcn/ui for the interface, with Lucide icons
+  * React Hook Form and Zod for forms and validation
+  * Redux Toolkit (with thunks) to manage application's state
 
 ## Demo
 
@@ -49,7 +50,8 @@ docker-compose up
 * For more information, see code [here](server/utils/seed.js)
 
 ```
-npm run seed:db [email-***@****.com] [password-******] // This is just an example.
+cd server
+npm run seed:db -- [email-***@****.com] [password-******] // This is just an example.
 ```
 
 ## Install
@@ -71,6 +73,10 @@ Create `.env` file for both client and server. See examples:
 [Frontend ENV](client/.env.example)
 
 [Backend ENV](server/.env.example)
+
+The client reads `NEXT_PUBLIC_API_URL` (the base URL of the API, for example `http://localhost:3000/api`). The name `API_URL`, used before the Next.js migration, is still accepted so existing `.env` files keep working. `NEXT_PUBLIC_*` variables are inlined into the browser bundle at build time, so never put secrets in them.
+
+The client dev server runs on port 8080 to match `CLIENT_URL` in the server env (used for the OAuth and email links).
 
 
 ## Pulseboard analytics (optional)
@@ -98,13 +104,30 @@ browser tracker ──POST /api/track──▶ store API ──POST /api/events 
 
 ## Vercel Deployment
 
-Both frontend and backend are deployed on Vercel from the same repository. When deploying on Vercel, make sure to specifiy the root directory as `client` and `server` when importing the repository. See [client vercel.json](client/vercel.json) and [server vercel.json](server/vercel.json).
+Both frontend and backend are deployed on Vercel from the same repository. When deploying on Vercel, make sure to specifiy the root directory as `client` and `server` when importing the repository. The client is a standard Next.js project (Vercel detects it automatically; set `NEXT_PUBLIC_API_URL` in the project settings). See [server vercel.json](server/vercel.json) for the API.
 
 ## Start development
 
 ```
 npm run dev
 ```
+
+## Client scripts
+
+Run these inside `client/`:
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Next.js dev server on http://localhost:8080 |
+| `npm run build` / `npm start` | Production build and server |
+| `npm run lint` | ESLint (Next.js core-web-vitals + TypeScript rules) |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm test` | Vitest unit tests (validation schemas, cart logic, analytics helpers) |
+| `npm run format` | Prettier (with Tailwind class sorting) |
+
+## Images
+
+Product photos fall back to royalty-free stock photography when a product has no uploaded image, and the home page, category tiles and marketing pages use curated photos. All of them live in `client/public/images` and are credited in [client/docs/image-credits](client/docs/image-credits).
 
 ## Languages & tools
 
@@ -114,9 +137,17 @@ npm run dev
 
 - [Mongoose](https://mongoosejs.com/)
 
-- [React](https://reactjs.org/)
+- [Next.js](https://nextjs.org/) and [React](https://react.dev/)
 
-- [Webpack](https://webpack.js.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+
+- [Tailwind CSS](https://tailwindcss.com/) and [shadcn/ui](https://ui.shadcn.com/)
+
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+
+- [React Hook Form](https://react-hook-form.com/) and [Zod](https://zod.dev/)
+
+- [Lucide](https://lucide.dev/)
 
 
 ### Code Formatter

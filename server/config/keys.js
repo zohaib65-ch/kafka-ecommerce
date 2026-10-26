@@ -1,6 +1,6 @@
 module.exports = {
   app: {
-    name: 'Mern Ecommerce',
+    name: 'Marketlane',
     apiURL: `${process.env.BASE_API_URL}`,
     clientURL: process.env.CLIENT_URL
   },
@@ -11,10 +11,6 @@ module.exports = {
   jwt: {
     secret: process.env.JWT_SECRET,
     tokenLife: '7d'
-  },
-  mailchimp: {
-    key: process.env.MAILCHIMP_KEY,
-    listKey: process.env.MAILCHIMP_LIST_KEY
   },
   mailgun: {
     key: process.env.MAILGUN_KEY,

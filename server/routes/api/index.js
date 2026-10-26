@@ -3,7 +3,6 @@ const router = require('express').Router();
 const authRoutes = require('./auth');
 const userRoutes = require('./user');
 const addressRoutes = require('./address');
-const newsletterRoutes = require('./newsletter');
 const productRoutes = require('./product');
 const categoryRoutes = require('./category');
 const brandRoutes = require('./brand');
@@ -23,9 +22,6 @@ router.use('/user', userRoutes);
 
 // address routes
 router.use('/address', addressRoutes);
-
-// newsletter routes
-router.use('/newsletter', newsletterRoutes);
 
 // product routes
 router.use('/product', productRoutes);

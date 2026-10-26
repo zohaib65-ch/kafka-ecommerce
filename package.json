@@ -21,9 +21,10 @@
     "express",
     "mongoose",
     "react",
-    "redux",
-    "redux-thunk",
-    "webpack"
+    "nextjs",
+    "redux-toolkit",
+    "typescript",
+    "tailwindcss"
   ],
   "author": "Mohamed Samara (https://github.com/mohamedsamara)",
   "license": "MIT",

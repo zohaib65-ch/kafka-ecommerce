@@ -2,7 +2,11 @@ version: '3'
 
 services:
   client:
-    build: client
+    build:
+      context: client
+      args:
+        # Inlined into the browser bundle at build time; must be reachable from the user's browser.
+        NEXT_PUBLIC_API_URL: http://localhost:3000/api
     container_name: client
     ports:
       - '8080:8080'
