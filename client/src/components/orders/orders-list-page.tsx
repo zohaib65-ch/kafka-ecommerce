@@ -2,7 +2,6 @@
 
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ReceiptText, SearchX } from 'lucide-react';
 
 import { SubPage } from '@/components/dashboard/sub-page';
 import { EmptyState } from '@/components/shared/empty-state';
@@ -122,9 +121,8 @@ export function OrdersListPage({ variant }: OrdersListPageProps) {
             aria-busy={isLoading}
             className={isLoading ? 'opacity-60 transition-opacity' : undefined}
           >
-            <p className='mb-3 text-sm text-muted-foreground'>
-              <span className='font-medium text-foreground'>{count}</span>{' '}
-              orders
+            <p className='meta mb-4'>
+              <span className='tabular text-foreground'>{count}</span> orders
             </p>
             <OrderList orders={visibleOrders} />
             {showPagination && (
@@ -140,7 +138,6 @@ export function OrdersListPage({ variant }: OrdersListPageProps) {
           <ListSkeleton rows={4} />
         ) : isSearch ? (
           <EmptyState
-            icon={SearchX}
             message={
               isCustomers ? 'No orders found.' : 'No orders match that ID.'
             }
@@ -148,7 +145,6 @@ export function OrdersListPage({ variant }: OrdersListPageProps) {
           />
         ) : (
           <EmptyState
-            icon={ReceiptText}
             message={
               isCustomers ? 'No orders found.' : 'You have no orders yet.'
             }

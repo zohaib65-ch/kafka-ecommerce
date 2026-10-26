@@ -13,7 +13,7 @@ import { ProductGrid, ProductGridSkeleton } from '../product-grid';
 import { SectionHeading } from './section-heading';
 
 const COUNT = 8;
-const gridClass = 'grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4';
+const gridClass = 'grid grid-cols-2 lg:grid-cols-4';
 
 /** The newest products (first page of the shop, newest first). Hidden when there are none. */
 export function NewArrivals() {
@@ -41,11 +41,10 @@ export function NewArrivals() {
   return (
     <section
       aria-labelledby='home-new-arrivals'
-      className='container-page mt-16 lg:mt-24'
+      className='container-page mt-20 lg:mt-28'
     >
       <SectionHeading
         id='home-new-arrivals'
-        eyebrow='Just in'
         title='New arrivals'
         href='/shop'
         linkLabel='Shop all'

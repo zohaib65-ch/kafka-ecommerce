@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { PackageX } from 'lucide-react';
 
 import { EmptyState } from '@/components/shared/empty-state';
 import { PageLoader } from '@/components/shared/loading';
@@ -40,7 +39,6 @@ export function OrderDetailsView({ id }: { id: string }) {
   if (order?._id !== id) {
     return (
       <EmptyState
-        icon={PackageX}
         message='No order found.'
         description='This order does not exist or you do not have access to it.'
         action={
@@ -53,13 +51,13 @@ export function OrderDetailsView({ id }: { id: string }) {
   }
 
   return (
-    <div className='space-y-10'>
+    <div className='space-y-12'>
       <OrderMeta
         order={order}
         onBack={handleBack}
         onCancelOrder={() => dispatch(cancelOrder())}
       />
-      <div className='grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start'>
+      <div className='grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start'>
         <OrderItems
           order={order}
           user={user}

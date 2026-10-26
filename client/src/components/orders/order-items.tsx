@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ChevronDown, Star } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 import { ConfirmDialog } from '@/components/shared/confirm-dialog';
 import { ProductImage } from '@/components/shared/product-image';
@@ -40,9 +40,7 @@ function ItemAction({
   if (item.status === CART_ITEM_STATUS.Delivered) {
     return (
       <Button asChild variant='outline' size='sm'>
-        <Link href={`/product/${item.product.slug}`}>
-          <Star /> Review Product
-        </Link>
+        <Link href={`/product/${item.product.slug}`}>Review Product</Link>
       </Button>
     );
   }
@@ -99,69 +97,55 @@ export function OrderItems({ order, user, onUpdateStatus }: OrderItemsProps) {
   const isAdmin = user.role === ROLES.Admin;
 
   return (
-    <section aria-labelledby='order-items-title' className='space-y-4'>
-      <h2 id='order-items-title' className='text-lg font-semibold'>
+    <section aria-labelledby='order-items-title'>
+      <h2 id='order-items-title' className='section-rule pt-4 text-3xl'>
         Order Items
       </h2>
-      <ul className='space-y-3'>
+      <ul className='mt-4 divide-y border-y'>
         {order.products.map(item => (
           <li
             key={item._id}
-            className='flex flex-col gap-4 rounded-2xl border bg-card p-4 shadow-soft sm:p-5'
+            className='grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3 py-5 sm:grid-cols-[auto_minmax(0,1fr)_auto]'
           >
-            <div className='flex items-start gap-4'>
-              <ProductImage
-                product={item.product ?? {}}
-                sizes='96px'
-                className='size-20 shrink-0 rounded-xl border sm:size-24'
-              />
-              <div className='min-w-0 flex-1 space-y-2'>
-                {item.product ? (
-                  <>
-                    <Link
-                      href={`/product/${item.product.slug}`}
-                      className='line-clamp-2 leading-snug font-medium hover:text-primary'
-                    >
-                      {item.product.name}
-                    </Link>
-                    <p className='text-sm text-muted-foreground'>
-                      {formatPrice(item.purchasePrice || item.product.price)}
-                    </p>
-                  </>
-                ) : (
-                  <p className='font-medium'>Not Available</p>
-                )}
-                <StatusBadge status={item.status} />
-              </div>
-              <dl className='hidden shrink-0 gap-8 text-right text-sm sm:flex'>
-                <div>
-                  <dt className='text-muted-foreground'>Quantity</dt>
-                  <dd className='mt-1 font-medium'>{item.quantity}</dd>
-                </div>
-                <div>
-                  <dt className='text-muted-foreground'>Total Price</dt>
-                  <dd className='mt-1 font-semibold'>
-                    {formatPrice(item.totalPrice)}
-                  </dd>
-                </div>
-              </dl>
+            <ProductImage
+              product={item.product ?? {}}
+              sizes='96px'
+              className='size-20 shrink-0 border sm:size-24'
+            />
+            <div className='min-w-0 space-y-2'>
+              {item.product ? (
+                <>
+                  <Link
+                    href={`/product/${item.product.slug}`}
+                    className='line-clamp-2 text-lg leading-snug font-semibold hover:underline'
+                  >
+                    {item.product.name}
+                  </Link>
+                  <p className='tabular text-sm text-muted-foreground'>
+                    {formatPrice(item.purchasePrice || item.product.price)} each
+                  </p>
+                </>
+              ) : (
+                <p className='text-lg font-semibold'>Not Available</p>
+              )}
+              <StatusBadge status={item.status} />
             </div>
 
-            <dl className='flex justify-between text-sm sm:hidden'>
-              <div className='flex gap-1.5'>
-                <dt className='text-muted-foreground'>Quantity</dt>
-                <dd className='font-medium'>{item.quantity}</dd>
+            <dl className='col-span-2 flex items-baseline justify-between gap-6 border-t pt-3 text-sm sm:col-span-1 sm:block sm:border-t-0 sm:pt-0 sm:text-right'>
+              <div className='flex gap-2 sm:block'>
+                <dt className='meta'>Quantity</dt>
+                <dd className='tabular font-medium'>{item.quantity}</dd>
               </div>
-              <div className='flex gap-1.5'>
-                <dt className='text-muted-foreground'>Total Price</dt>
-                <dd className='font-semibold'>
+              <div className='flex gap-2 sm:mt-3 sm:block'>
+                <dt className='meta'>Total Price</dt>
+                <dd className='tabular font-heading text-2xl leading-none font-semibold'>
                   {formatPrice(item.totalPrice)}
                 </dd>
               </div>
             </dl>
 
             {item.product && item.status !== CART_ITEM_STATUS.Cancelled && (
-              <div className='flex justify-end border-t pt-3'>
+              <div className='col-span-2 flex justify-end sm:col-span-3'>
                 <ItemAction
                   item={item}
                   isAdmin={isAdmin}

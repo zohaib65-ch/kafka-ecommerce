@@ -21,33 +21,34 @@ export function OrderMeta({ order, onBack, onCancelOrder }: OrderMetaProps) {
   );
 
   return (
-    <div className='space-y-6'>
-      <div className='flex flex-wrap items-center justify-between gap-3'>
-        <h1 className='text-3xl font-semibold tracking-tight sm:text-4xl'>
-          Order Details
-        </h1>
-        <Button variant='ghost' size='sm' onClick={onBack}>
-          <ArrowLeft /> Back to orders
-        </Button>
-      </div>
+    <div>
+      <Button variant='link' size='sm' className='mb-6' onClick={onBack}>
+        <ArrowLeft /> Back to orders
+      </Button>
 
-      <div className='flex flex-col gap-5 rounded-2xl border bg-card p-5 shadow-soft sm:flex-row sm:items-center sm:justify-between sm:p-6'>
-        <dl className='grid min-w-0 gap-x-10 gap-y-3 text-sm sm:grid-cols-[auto_1fr]'>
-          <dt className='text-muted-foreground'>Order ID</dt>
-          <dd className='truncate font-mono font-medium'>{order._id}</dd>
-          <dt className='text-muted-foreground'>Order Date</dt>
-          <dd className='font-medium'>{formatDate(order.created)}</dd>
-        </dl>
-        {canCancel && (
-          <ConfirmDialog
-            trigger={<Button variant='outline'>Cancel Order</Button>}
-            title='Cancel this order?'
-            description='The whole order will be cancelled. This action cannot be undone.'
-            confirmLabel='Cancel order'
-            cancelLabel='Keep order'
-            onConfirm={onCancelOrder}
-          />
-        )}
+      <div className='section-rule pt-5'>
+        <h1 className='text-5xl sm:text-6xl'>Order Details</h1>
+
+        <div className='mt-6 flex flex-col gap-5 border-y py-5 sm:flex-row sm:items-center sm:justify-between'>
+          <dl className='grid min-w-0 gap-x-10 gap-y-3 sm:grid-cols-[auto_1fr] sm:items-baseline'>
+            <dt className='meta'>Order ID</dt>
+            <dd className='truncate font-mono text-sm font-medium'>
+              {order._id}
+            </dd>
+            <dt className='meta'>Order Date</dt>
+            <dd className='font-medium'>{formatDate(order.created)}</dd>
+          </dl>
+          {canCancel && (
+            <ConfirmDialog
+              trigger={<Button variant='outline'>Cancel Order</Button>}
+              title='Cancel this order?'
+              description='The whole order will be cancelled. This action cannot be undone.'
+              confirmLabel='Cancel order'
+              cancelLabel='Keep order'
+              onConfirm={onCancelOrder}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
