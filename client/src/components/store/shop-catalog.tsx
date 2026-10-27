@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { SlidersHorizontal } from 'lucide-react';
 
 import { PageHeader } from '@/components/shared/page-header';
 import { EmptyState } from '@/components/shared/empty-state';
@@ -107,13 +106,7 @@ export function ShopCatalog({ scope, slug }: ShopCatalogProps) {
     found?.description ??
     (scope
       ? undefined
-      : 'Browse everything in the store. Filter by price and rating, then sort to find your next favorite.');
-  const eyebrow =
-    scope === 'category'
-      ? 'Category'
-      : scope === 'brand'
-        ? 'Brand'
-        : 'The shop';
+      : 'Everything in the store. Filter by price and rating, then sort.');
 
   const handlePageChange = (page: number) => {
     dispatch(filterProducts('pagination', page));
@@ -122,7 +115,7 @@ export function ShopCatalog({ scope, slug }: ShopCatalogProps) {
 
   return (
     <div className='container-page py-10 lg:py-14'>
-      <Breadcrumb className='mb-6'>
+      <Breadcrumb className='mb-8'>
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
@@ -150,22 +143,21 @@ export function ShopCatalog({ scope, slug }: ShopCatalogProps) {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <PageHeader eyebrow={eyebrow} title={title} description={description} />
+      <PageHeader title={title} description={description} />
 
-      <div className='mt-10 grid gap-8 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-10'>
+      <div className='mt-10 grid gap-8 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12'>
         <aside
           aria-label='Product filters'
-          className='hidden self-start rounded-2xl border bg-card p-6 lg:sticky lg:top-28 lg:block'
+          className='hidden self-start lg:sticky lg:top-24 lg:block'
         >
           <ShopFilters />
         </aside>
 
         <div ref={gridTop} className='min-w-0 scroll-mt-28'>
-          <div className='mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border bg-card p-3 pl-4'>
-            <p className='text-sm text-muted-foreground' aria-live='polite'>
-              <span className='font-medium text-foreground'>Showing: </span>
+          <div className='mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-foreground pb-3'>
+            <p className='tabular text-sm' aria-live='polite'>
               {totalProducts > 0
-                ? `${left}-${right} products of ${count} products`
+                ? `Showing ${left}–${right} of ${count} products`
                 : `${count} products`}
             </p>
 
@@ -177,12 +169,9 @@ export function ShopCatalog({ scope, slug }: ShopCatalogProps) {
                 className='lg:hidden'
                 onClick={() => setFiltersOpen(true)}
               >
-                <SlidersHorizontal /> Filters
+                Filters
               </Button>
-              <label
-                htmlFor='shop-sort'
-                className='hidden text-sm text-muted-foreground sm:block'
-              >
+              <label htmlFor='shop-sort' className='meta hidden sm:block'>
                 Sort by
               </label>
               <Select
@@ -194,7 +183,7 @@ export function ShopCatalog({ scope, slug }: ShopCatalogProps) {
                 <SelectTrigger
                   id='shop-sort'
                   size='sm'
-                  className='min-w-44'
+                  className='min-w-48'
                   aria-label='Sort products'
                 >
                   <SelectValue />
@@ -239,10 +228,12 @@ export function ShopCatalog({ scope, slug }: ShopCatalogProps) {
 
       <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
         <SheetContent side='left' className='w-full gap-0 sm:max-w-sm'>
-          <SheetHeader className='border-b'>
-            <SheetTitle>Filters</SheetTitle>
+          <SheetHeader className='border-b border-foreground'>
+            <SheetTitle className='font-heading text-3xl leading-none font-semibold uppercase'>
+              Filters
+            </SheetTitle>
             <SheetDescription>
-              Narrow down the products by price and rating.
+              Narrow the products by price and rating.
             </SheetDescription>
           </SheetHeader>
           <div className='overflow-y-auto p-5'>

@@ -37,9 +37,9 @@ export function ReviewForm() {
 
   if (!authenticated) {
     return (
-      <div className='rounded-2xl border bg-card p-6 text-center shadow-soft sm:p-8'>
-        <h3 className='text-xl font-semibold'>Add Review</h3>
-        <p className='mx-auto mt-2 max-w-sm text-sm text-muted-foreground'>
+      <div className='border-t border-foreground pt-6'>
+        <h3 className='text-3xl font-semibold'>Add Review</h3>
+        <p className='mt-2 max-w-sm text-muted-foreground'>
           Sign in to share what you think about this product.
         </p>
         <Button asChild className='mt-5'>
@@ -50,8 +50,8 @@ export function ReviewForm() {
   }
 
   return (
-    <div className='rounded-2xl border bg-card p-6 shadow-soft sm:p-8'>
-      <h3 className='mb-5 text-xl font-semibold'>Add Review</h3>
+    <div className='border-t border-foreground pt-6'>
+      <h3 className='mb-5 text-3xl font-semibold'>Add Review</h3>
       <Form
         form={form}
         onSubmit={async values => {

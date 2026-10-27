@@ -54,7 +54,7 @@ export function OrderList({ orders }: { orders: Order[] }) {
                     {formatDate(order.created)}
                   </span>
                   <span className='md:text-foreground'>
-                    <span className='md:hidden'>{itemCount} items · </span>
+                    <span className='md:hidden'>{itemCount} items</span>
                     <span className='hidden md:inline'>{itemCount}</span>
                   </span>
                   {first ? (

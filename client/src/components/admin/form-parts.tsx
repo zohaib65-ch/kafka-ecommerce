@@ -1,21 +1,9 @@
 import { cn } from '@/lib/utils';
 
-/** Card that holds an admin form (add / edit pages). */
-export function FormCard({
-  className,
-  children
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className={cn('rounded-2xl border bg-card p-5 sm:p-7', className)}>
-      {children}
-    </div>
-  );
-}
-
-/** Titled group of fields inside a form. */
+/**
+ * Titled group of fields. From `md` the title sits in a left column and the fields in the right
+ * one, opened by a hairline rule, like a printed order form.
+ */
 export function FormSection({
   title,
   description,
@@ -28,16 +16,22 @@ export function FormSection({
   children: React.ReactNode;
 }) {
   return (
-    <fieldset className={cn('space-y-5', className)}>
-      <legend className='mb-1 w-full'>
-        <span className='block text-base font-semibold'>{title}</span>
+    <fieldset
+      className={cn(
+        'grid gap-5 border-t pt-6 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-10',
+        className
+      )}
+    >
+      <legend className='sr-only'>{title}</legend>
+      <div aria-hidden='true'>
+        <h2 className='font-heading text-xl leading-tight font-semibold tracking-normal normal-case'>
+          {title}
+        </h2>
         {description && (
-          <span className='mt-0.5 block text-sm font-normal text-muted-foreground'>
-            {description}
-          </span>
+          <p className='mt-1 text-sm text-muted-foreground'>{description}</p>
         )}
-      </legend>
-      {children}
+      </div>
+      <div className='max-w-2xl space-y-5'>{children}</div>
     </fieldset>
   );
 }
@@ -53,7 +47,7 @@ export function FormActions({
   return (
     <div
       className={cn(
-        'flex flex-col gap-3 border-t pt-6 sm:flex-row sm:items-center',
+        'flex flex-col gap-3 border-t border-foreground pt-6 sm:flex-row sm:items-center',
         className
       )}
     >

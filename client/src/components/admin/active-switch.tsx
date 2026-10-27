@@ -15,7 +15,7 @@ type ActiveSwitchProps = {
   className?: string;
 };
 
-/** The "Active?" switch of the edit pages. Controlled: the page owns the value. */
+/** The "Active?" switch: a plain labelled row under a hairline rule. Controlled: the page owns the value. */
 export function ActiveSwitch({
   checked,
   onCheckedChange,
@@ -29,12 +29,12 @@ export function ActiveSwitch({
   return (
     <div
       className={cn(
-        'flex items-start justify-between gap-4 rounded-xl border bg-card p-4',
+        'flex items-start justify-between gap-6 border-t py-4',
         className
       )}
     >
       <div className='space-y-1'>
-        <label htmlFor={id} className='text-sm leading-none font-medium'>
+        <label htmlFor={id} className='block font-semibold'>
           {label}
         </label>
         {hint && (

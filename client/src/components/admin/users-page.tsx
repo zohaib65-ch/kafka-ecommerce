@@ -23,7 +23,7 @@ const columns: Column<UserListItem>[] = [
     header: 'Name',
     primary: true,
     cell: user => (
-      <span className='font-medium'>
+      <span className='font-semibold'>
         {user.firstName ? `${user.firstName} ${user.lastName ?? ''}` : 'N/A'}
       </span>
     )
@@ -31,13 +31,13 @@ const columns: Column<UserListItem>[] = [
   {
     id: 'email',
     header: 'Email',
-    cell: user => <span className='break-all'>{user.email ?? '-'}</span>
+    cell: user => <span className='break-all'>{user.email ?? '–'}</span>
   },
-  { id: 'provider', header: 'Provider', cell: user => user.provider ?? '-' },
+  { id: 'provider', header: 'Provider', cell: user => user.provider ?? '–' },
   {
     id: 'created',
-    header: 'Account Created',
-    cell: user => (user.created ? formatDate(user.created) : '-')
+    header: 'Created',
+    cell: user => (user.created ? formatDate(user.created) : '–')
   },
   {
     id: 'role',
@@ -71,8 +71,8 @@ export function UsersPage() {
   const { currentPage, totalPages, count } = advancedFilters;
 
   return (
-    <SubPage title='Users' description='Everyone with an account in the store.'>
-      <div className='space-y-5'>
+    <SubPage title='Users' description='Everyone with an account.'>
+      <div className='space-y-6'>
         <ListSearch
           label='Search users'
           placeholder='Type user name or email'
@@ -82,7 +82,7 @@ export function UsersPage() {
         {!loaded || (isLoading && filtered.length === 0) ? (
           <InlineLoader label='Loading users' />
         ) : filtered.length > 0 ? (
-          <div className='space-y-5' aria-busy={isLoading}>
+          <div className='space-y-4' aria-busy={isLoading}>
             <ResultCount
               count={isSearch ? filtered.length : count}
               singular='user'

@@ -25,7 +25,6 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { StarRatingInput } from '@/components/shared/star-rating';
 import { cn } from '@/lib/utils';
@@ -71,7 +70,7 @@ function FieldShell({
   return (
     <Field data-invalid={!!error} className={className}>
       {label && (
-        <FieldLabel htmlFor={id}>
+        <FieldLabel htmlFor={id} className='text-[0.8125rem] font-semibold'>
           {label}
           {required && (
             <span aria-hidden='true' className='text-destructive'>
@@ -82,11 +81,17 @@ function FieldShell({
       )}
       {children}
       {description && (
-        <FieldDescription id={`${id}-description`}>
+        <FieldDescription id={`${id}-description`} className='text-[0.8125rem]'>
           {description}
         </FieldDescription>
       )}
-      {error && <FieldError id={`${id}-error`} errors={[error]} />}
+      {error && (
+        <FieldError
+          id={`${id}-error`}
+          errors={[error]}
+          className='text-[0.8125rem] font-medium'
+        />
+      )}
     </Field>
   );
 }
@@ -218,7 +223,7 @@ export function PasswordField<T extends FieldValues>({
               onClick={() => setVisible(value => !value)}
               aria-label={visible ? 'Hide password' : 'Show password'}
               aria-pressed={visible}
-              className='absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-lg text-muted-foreground hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none'
+              className='absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-sm text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring'
             >
               {visible ? (
                 <EyeOff className='size-4' />
@@ -504,49 +509,6 @@ export function CheckboxField<T extends FieldValues>({
   );
 }
 
-export function SwitchField<T extends FieldValues>({
-  control,
-  name,
-  label,
-  description,
-  disabled,
-  className
-}: BaseFieldProps<T>) {
-  const id = useId();
-
-  return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field, fieldState }) => (
-        <Field
-          orientation='horizontal'
-          data-invalid={fieldState.invalid}
-          className={cn(
-            'justify-between rounded-xl border bg-card p-4',
-            className
-          )}
-        >
-          <FieldContent>
-            <FieldLabel htmlFor={id}>{label}</FieldLabel>
-            {description && <FieldDescription>{description}</FieldDescription>}
-            {fieldState.error && <FieldError errors={[fieldState.error]} />}
-          </FieldContent>
-          <Switch
-            id={id}
-            name={field.name}
-            ref={field.ref}
-            checked={!!field.value}
-            disabled={disabled}
-            onCheckedChange={field.onChange}
-            onBlur={field.onBlur}
-          />
-        </Field>
-      )}
-    />
-  );
-}
-
 /* ------------------------------------------------------------------ */
 /* Rating & file                                                       */
 /* ------------------------------------------------------------------ */
@@ -692,12 +654,12 @@ function FilePicker({
     <label
       htmlFor={id}
       className={cn(
-        'flex cursor-pointer items-center gap-4 rounded-xl border border-dashed bg-card p-4 transition-colors focus-within:ring-3 focus-within:ring-ring/50 hover:border-primary/60',
+        'flex cursor-pointer items-center gap-4 rounded-sm border border-dashed border-input p-4 transition-colors focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring hover:border-foreground',
         invalid && 'border-destructive',
         disabled && 'pointer-events-none opacity-50'
       )}
     >
-      <span className='flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted text-muted-foreground'>
+      <span className='flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-muted text-muted-foreground'>
         {shown ? (
           // eslint-disable-next-line @next/next/no-img-element -- local blob/remote preview, not optimizable
           <img

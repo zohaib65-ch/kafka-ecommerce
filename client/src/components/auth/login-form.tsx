@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-
 import {
   Form,
   PasswordField,
@@ -15,6 +13,7 @@ import { login } from '@/store/login/actions';
 
 import { FormDivider } from './form-divider';
 import { SocialAuthButtons } from './social-auth-buttons';
+import { TextLink } from './text-link';
 
 export function LoginForm() {
   const dispatch = useAppDispatch();
@@ -23,7 +22,7 @@ export function LoginForm() {
   return (
     <>
       <SocialAuthButtons mode='login' />
-      <FormDivider>or login with email</FormDivider>
+      <FormDivider>or use your email</FormDivider>
       <Form
         form={form}
         onSubmit={async values => {
@@ -36,7 +35,7 @@ export function LoginForm() {
           name='email'
           type='email'
           label='Email Address'
-          placeholder='Please Enter Your Email'
+          placeholder='you@example.com'
           autoComplete='email'
         />
         <div className='space-y-2'>
@@ -44,16 +43,12 @@ export function LoginForm() {
             control={form.control}
             name='password'
             label='Password'
-            placeholder='Please Enter Your Password'
             autoComplete='current-password'
           />
           <div className='flex justify-end'>
-            <Link
-              href='/forgot-password'
-              className='text-sm font-medium text-primary hover:underline'
-            >
+            <TextLink href='/forgot-password' className='text-sm'>
               Forgot Password?
-            </Link>
+            </TextLink>
           </div>
         </div>
         <SubmitButton

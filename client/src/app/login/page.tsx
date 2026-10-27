@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
 import { AuthShell } from '@/components/auth/auth-shell';
 import { LoginForm } from '@/components/auth/login-form';
+import { TextLink } from '@/components/auth/text-link';
 import { GuestOnly } from '@/components/shared/auth-guard';
 
 export const metadata: Metadata = {
@@ -16,16 +16,11 @@ export default function LoginPage() {
     <GuestOnly>
       <AuthShell
         title='Login'
-        description='Welcome back. Login to manage your orders, wishlist and account.'
+        description='Pick up where you left off: your orders, wishlist and account.'
         footer={
           <p>
             New to Marketlane?{' '}
-            <Link
-              href='/register'
-              className='font-medium text-primary hover:underline'
-            >
-              Create an account
-            </Link>
+            <TextLink href='/register'>Create an account</TextLink>
           </p>
         }
       >

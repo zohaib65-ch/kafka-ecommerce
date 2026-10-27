@@ -7,7 +7,6 @@ import { SubPage } from '@/components/dashboard/sub-page';
 import {
   Form,
   SubmitButton,
-  SwitchField,
   TextField,
   TextareaField,
   useZodForm
@@ -23,7 +22,8 @@ import { addCategory } from '@/store/category/actions';
 import { fetchProductsSelect } from '@/store/product/actions';
 
 import { CancelButton } from './cancel-button';
-import { FormActions, FormCard } from './form-parts';
+import { ActiveSwitchField } from './active-switch-field';
+import { FormActions, FormSection } from './form-parts';
 import { IdMultiSelectField } from './id-multi-select-field';
 
 export function AddCategoryPage() {
@@ -51,16 +51,17 @@ export function AddCategoryPage() {
   return (
     <SubPage
       title='Add Category'
-      description='Create a category and choose the products that belong to it.'
+      description='Create a category and pick the products in it.'
       actions={<CancelButton />}
     >
-      <FormCard>
-        <Form
-          form={form}
-          onSubmit={async values => {
-            await dispatch(addCategory(values));
-          }}
-        >
+      <Form
+        form={form}
+        className='space-y-8'
+        onSubmit={async values => {
+          await dispatch(addCategory(values));
+        }}
+      >
+        <FormSection title='Details'>
           <TextField
             control={form.control}
             name='name'
@@ -94,19 +95,18 @@ export function AddCategoryPage() {
             options={productOptions}
             required
           />
-          <SwitchField
+          <ActiveSwitchField
             control={form.control}
             name='isActive'
-            label='Active?'
-            description='Inactive categories are hidden from the shop.'
+            hint='Inactive categories are hidden from the shop.'
           />
-          <FormActions>
-            <SubmitButton loading={form.formState.isSubmitting}>
-              Add Category
-            </SubmitButton>
-          </FormActions>
-        </Form>
-      </FormCard>
+        </FormSection>
+        <FormActions>
+          <SubmitButton loading={form.formState.isSubmitting}>
+            Add Category
+          </SubmitButton>
+        </FormActions>
+      </Form>
     </SubPage>
   );
 }

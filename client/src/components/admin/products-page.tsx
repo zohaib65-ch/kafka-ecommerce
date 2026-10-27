@@ -29,13 +29,13 @@ const columns: Column<ManagedProduct>[] = [
       <div className='flex min-w-0 items-center gap-3'>
         <ProductImage
           product={product}
-          sizes='56px'
-          className='size-14 shrink-0 rounded-xl border'
+          sizes='48px'
+          className='size-12 shrink-0 border'
         />
         <div className='min-w-0'>
           <Link
             href={`/dashboard/product/edit/${product._id}`}
-            className='block truncate font-medium hover:text-primary'
+            className='block truncate font-semibold underline-offset-4 hover:underline hover:decoration-brand hover:decoration-2'
           >
             {product.name}
           </Link>
@@ -51,7 +51,9 @@ const columns: Column<ManagedProduct>[] = [
     id: 'price',
     header: 'Price',
     cell: product => (
-      <span className='font-medium'>{formatPrice(product.price)}</span>
+      <span className='tabular font-semibold'>
+        {formatPrice(product.price)}
+      </span>
     )
   },
   {
@@ -59,7 +61,10 @@ const columns: Column<ManagedProduct>[] = [
     header: 'Stock',
     cell: product => (
       <span
-        className={cn(product.quantity <= 0 && 'font-medium text-destructive')}
+        className={cn(
+          'tabular',
+          product.quantity <= 0 && 'font-semibold text-destructive'
+        )}
       >
         {product.quantity <= 0 ? 'Out of stock' : product.quantity}
       </span>
@@ -105,7 +110,7 @@ export function ProductsPage() {
   return (
     <SubPage
       title='Products'
-      description='Everything that is listed in the shop.'
+      description='Everything listed in the shop.'
       actions={
         <Button size='sm' asChild>
           <Link href='/dashboard/product/add'>
@@ -122,6 +127,7 @@ export function ProductsPage() {
           rows={products}
           columns={columns}
           getRowKey={product => product._id}
+          mobileColumns={3}
         />
       ) : (
         <EmptyState message='No products found.' />

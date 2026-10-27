@@ -3,7 +3,10 @@ import type { Order } from '@/types';
 
 export function OrderSummary({ order }: { order: Order }) {
   return (
-    <section aria-labelledby='order-summary-title' className='section-rule pt-4'>
+    <section
+      aria-labelledby='order-summary-title'
+      className='section-rule pt-4'
+    >
       <h2 id='order-summary-title' className='text-3xl'>
         Order Summary
       </h2>
@@ -21,7 +24,9 @@ export function OrderSummary({ order }: { order: Order }) {
           <dd className='font-medium'>Free</dd>
         </div>
         <div className='flex items-baseline justify-between pt-4'>
-          <dt className='font-heading text-xl font-semibold uppercase'>Total</dt>
+          <dt className='font-heading text-xl font-semibold uppercase'>
+            Total
+          </dt>
           <dd className='tabular font-heading text-4xl leading-none font-semibold'>
             {formatPrice(order.totalWithTax)}
           </dd>

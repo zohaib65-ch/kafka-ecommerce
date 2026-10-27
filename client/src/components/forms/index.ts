@@ -8,7 +8,6 @@ export {
   TextareaField,
   SelectField,
   CheckboxField,
-  SwitchField,
   RatingField,
   FileField
 } from './fields';

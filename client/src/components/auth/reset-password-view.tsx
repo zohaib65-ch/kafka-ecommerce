@@ -13,7 +13,6 @@ export function ResetPasswordView({ token }: { token: string }) {
   return (
     <GuestOnly>
       <AuthShell
-        variant='single'
         title='Reset Password'
         description='Choose a new password for your account.'
       >

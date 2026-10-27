@@ -45,7 +45,7 @@ export function WishlistButton({
   return (
     <Button
       type='button'
-      variant={variant === 'overlay' ? 'secondary' : 'outline'}
+      variant='outline'
       size={variant === 'overlay' ? 'icon-sm' : 'icon-lg'}
       aria-pressed={liked}
       aria-label={
@@ -56,18 +56,12 @@ export function WishlistButton({
       disabled={pending}
       onClick={handleClick}
       className={cn(
-        'rounded-full',
         variant === 'overlay' &&
-          'bg-background/90 shadow-soft backdrop-blur-sm hover:bg-background',
+          'border-border bg-background text-foreground hover:border-foreground hover:bg-background hover:text-foreground',
         className
       )}
     >
-      <Heart
-        className={cn(
-          'transition-colors',
-          liked && 'fill-destructive text-destructive'
-        )}
-      />
+      <Heart className={cn(liked && 'fill-brand text-brand')} />
     </Button>
   );
 }

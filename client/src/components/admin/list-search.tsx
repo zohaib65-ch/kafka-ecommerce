@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Search, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,7 +17,7 @@ type ListSearchProps = {
   className?: string;
 };
 
-/** Search field for the dashboard lists (users, merchants). */
+/** Search field for the dashboard lists (users, merchants): one square input with its button attached. */
 export function ListSearch({
   label,
   placeholder,
@@ -44,17 +44,13 @@ export function ListSearch({
   return (
     <form
       role='search'
-      className={cn('flex items-center gap-2', className)}
+      className={cn('flex items-stretch', className)}
       onSubmit={event => {
         event.preventDefault();
         run(value);
       }}
     >
       <div className='relative flex-1'>
-        <Search
-          className='pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground'
-          aria-hidden='true'
-        />
         <Input
           type='text'
           name='search'
@@ -63,7 +59,7 @@ export function ListSearch({
           autoComplete='off'
           value={value}
           onChange={event => handleChange(event.target.value)}
-          className='pr-10 pl-9'
+          className='h-11 rounded-r-none border-foreground pr-10'
         />
         {value && (
           <button
@@ -73,17 +69,13 @@ export function ListSearch({
               setValue('');
               run('');
             }}
-            className='absolute top-1/2 right-2 grid size-7 -translate-y-1/2 place-items-center rounded-full text-muted-foreground hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none'
+            className='absolute top-1/2 right-1 grid size-9 -translate-y-1/2 place-items-center text-muted-foreground hover:text-foreground'
           >
             <X className='size-4' />
           </button>
         )}
       </div>
-      <Button
-        type='submit'
-        variant='secondary'
-        className='hidden sm:inline-flex'
-      >
+      <Button type='submit' className='h-11 rounded-l-none'>
         Search
       </Button>
     </form>

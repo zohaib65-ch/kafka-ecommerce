@@ -31,7 +31,7 @@ import type { Brand } from '@/types';
 
 import { ActiveSwitch } from './active-switch';
 import { CancelButton } from './cancel-button';
-import { FormActions, FormCard } from './form-parts';
+import { FormActions, FormSection } from './form-parts';
 import { PublicLink } from './public-link';
 import { useLoad } from './use-load';
 
@@ -54,7 +54,7 @@ function EditBrandForm({ brand }: { brand: Brand }) {
   };
 
   return (
-    <div className='space-y-6'>
+    <div className='space-y-8'>
       <PublicLink
         label='Brand link'
         href={`/shop/brand/${brand.slug}`}
@@ -67,13 +67,14 @@ function EditBrandForm({ brand }: { brand: Brand }) {
         hint={`Disabling ${brand.name} will also disable all ${brand.name} products.`}
       />
 
-      <FormCard>
-        <Form
-          form={form}
-          onSubmit={async values => {
-            await dispatch(updateBrand(brand._id, values));
-          }}
-        >
+      <Form
+        form={form}
+        className='space-y-8'
+        onSubmit={async values => {
+          await dispatch(updateBrand(brand._id, values));
+        }}
+      >
+        <FormSection title='Details'>
           <TextField
             control={form.control}
             name='name'
@@ -107,28 +108,24 @@ function EditBrandForm({ brand }: { brand: Brand }) {
               </span>
             }
           />
-          <FormActions>
-            <SubmitButton loading={form.formState.isSubmitting}>
-              Save
-            </SubmitButton>
-            <ConfirmDialog
-              title={`Delete ${brand.name}?`}
-              description='This permanently removes the brand. This action cannot be undone.'
-              confirmLabel='Delete brand'
-              onConfirm={() => dispatch(deleteBrand(brand._id))}
-              trigger={
-                <Button
-                  type='button'
-                  variant='destructive'
-                  disabled={isMerchant}
-                >
-                  <Trash2 /> Delete
-                </Button>
-              }
-            />
-          </FormActions>
-        </Form>
-      </FormCard>
+        </FormSection>
+        <FormActions>
+          <SubmitButton loading={form.formState.isSubmitting}>
+            Save
+          </SubmitButton>
+          <ConfirmDialog
+            title={`Delete ${brand.name}?`}
+            description='This permanently removes the brand. This action cannot be undone.'
+            confirmLabel='Delete brand'
+            onConfirm={() => dispatch(deleteBrand(brand._id))}
+            trigger={
+              <Button type='button' variant='destructive' disabled={isMerchant}>
+                <Trash2 /> Delete
+              </Button>
+            }
+          />
+        </FormActions>
+      </Form>
     </div>
   );
 }
@@ -144,7 +141,7 @@ export function EditBrandPage({ id }: { id: string }) {
   return (
     <SubPage
       title='Edit Brand'
-      description='Update the brand details.'
+      description='Change the brand details.'
       actions={<CancelButton />}
     >
       {!loaded ? (

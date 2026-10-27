@@ -1,7 +1,6 @@
 'use client';
 
 import { useId, useState } from 'react';
-import { RotateCcw } from 'lucide-react';
 
 import { StarRating } from '@/components/shared/star-rating';
 import { Button } from '@/components/ui/button';
@@ -12,8 +11,8 @@ import { formatPrice } from '@/lib/format';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { filterProducts, setAdvancedFilters } from '@/store/product/actions';
 
-export const PRICE_MIN = 1;
-export const PRICE_MAX = 5000;
+const PRICE_MIN = 1;
+const PRICE_MAX = 5000;
 const DEFAULT_PRICE: [number, number] = [1, 2500];
 
 // "n stars and up" (the API matches `averageRating >= rating`); 0 means any rating.
@@ -61,18 +60,15 @@ export function ShopFilters({ onApplied }: ShopFiltersProps) {
   return (
     <div className='space-y-8'>
       <section aria-labelledby={`${groupId}-price`}>
-        <h2 id={`${groupId}-price`} className='text-sm font-semibold'>
+        <h2
+          id={`${groupId}-price`}
+          className='meta border-b pb-2 font-sans tracking-[0.12em]'
+        >
           Price
         </h2>
-        <div className='mt-3 flex items-center justify-between text-sm text-muted-foreground'>
-          <span className='rounded-md bg-muted px-2 py-1 font-medium text-foreground tabular-nums'>
-            {formatPrice(price[0])}
-          </span>
-          <span aria-hidden='true'>to</span>
-          <span className='rounded-md bg-muted px-2 py-1 font-medium text-foreground tabular-nums'>
-            {formatPrice(price[1])}
-          </span>
-        </div>
+        <p className='tabular mt-4 font-heading text-3xl leading-none font-semibold'>
+          {formatPrice(price[0])} – {formatPrice(price[1])}
+        </p>
         <Slider
           className='mt-5'
           min={PRICE_MIN}
@@ -89,18 +85,21 @@ export function ShopFilters({ onApplied }: ShopFiltersProps) {
             onApplied?.();
           }}
         />
-        <div className='mt-2 flex justify-between text-xs text-muted-foreground'>
+        <div className='tabular mt-2 flex justify-between text-xs text-muted-foreground'>
           <span>{formatPrice(PRICE_MIN)}</span>
           <span>{formatPrice(PRICE_MAX)}</span>
         </div>
       </section>
 
       <section aria-labelledby={`${groupId}-rating`}>
-        <h2 id={`${groupId}-rating`} className='text-sm font-semibold'>
+        <h2
+          id={`${groupId}-rating`}
+          className='meta border-b pb-2 font-sans tracking-[0.12em]'
+        >
           Rating
         </h2>
         <RadioGroup
-          className='mt-3 gap-1'
+          className='mt-1 gap-0'
           value={String(rating)}
           onValueChange={value => {
             dispatch(filterProducts('rating', Number(value)));
@@ -112,7 +111,7 @@ export function ShopFilters({ onApplied }: ShopFiltersProps) {
             <Label
               key={option.value}
               htmlFor={`${groupId}-rating-${option.value}`}
-              className='flex min-h-10 cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 text-sm font-normal hover:bg-muted has-data-checked:bg-accent'
+              className='flex min-h-11 cursor-pointer items-center gap-3 border-b text-sm font-normal hover:bg-accent has-data-checked:font-semibold'
             >
               <RadioGroupItem
                 id={`${groupId}-rating-${option.value}`}
@@ -136,14 +135,8 @@ export function ShopFilters({ onApplied }: ShopFiltersProps) {
         </RadioGroup>
       </section>
 
-      <Button
-        type='button'
-        variant='outline'
-        className='w-full'
-        disabled={isDefault}
-        onClick={reset}
-      >
-        <RotateCcw /> Reset filters
+      <Button type='button' variant='link' disabled={isDefault} onClick={reset}>
+        Reset filters
       </Button>
     </div>
   );

@@ -22,7 +22,7 @@ export function OrderMeta({ order, onBack, onCancelOrder }: OrderMetaProps) {
 
   return (
     <div>
-      <Button variant='link' size='sm' className='mb-6' onClick={onBack}>
+      <Button variant='link' size='sm' className='mb-6 px-0' onClick={onBack}>
         <ArrowLeft /> Back to orders
       </Button>
 

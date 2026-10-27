@@ -42,7 +42,7 @@ export function MerchantSignupForm({
         name='email'
         type='email'
         label='Email Address'
-        placeholder='Please Enter Your Email'
+        placeholder='you@example.com'
         autoComplete='email'
       />
       <div className='grid gap-5 sm:grid-cols-2'>
@@ -50,14 +50,14 @@ export function MerchantSignupForm({
           control={form.control}
           name='firstName'
           label='First Name'
-          placeholder='Please Enter Your First Name'
+          placeholder='First name'
           autoComplete='given-name'
         />
         <TextField
           control={form.control}
           name='lastName'
           label='Last Name'
-          placeholder='Please Enter Your Last Name'
+          placeholder='Last name'
           autoComplete='family-name'
         />
       </div>
@@ -65,7 +65,6 @@ export function MerchantSignupForm({
         control={form.control}
         name='password'
         label='Password'
-        placeholder='Please Enter Your Password'
         description='Use at least 6 characters.'
         autoComplete='new-password'
       />
@@ -74,7 +73,7 @@ export function MerchantSignupForm({
         className='w-full'
         loading={form.formState.isSubmitting}
       >
-        Get Started
+        Create account
       </SubmitButton>
     </Form>
   );

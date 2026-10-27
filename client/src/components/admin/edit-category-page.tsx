@@ -35,7 +35,7 @@ import type { CategoryDetail } from '@/types';
 
 import { ActiveSwitch } from './active-switch';
 import { CancelButton } from './cancel-button';
-import { FormActions, FormCard } from './form-parts';
+import { FormActions, FormSection } from './form-parts';
 import { IdMultiSelectField } from './id-multi-select-field';
 import { PublicLink } from './public-link';
 import { useLoad } from './use-load';
@@ -70,7 +70,7 @@ function EditCategoryForm({ category }: { category: CategoryDetail }) {
   };
 
   return (
-    <div className='space-y-6'>
+    <div className='space-y-8'>
       <PublicLink
         label='Category link'
         href={`/shop/category/${category.slug}`}
@@ -83,13 +83,14 @@ function EditCategoryForm({ category }: { category: CategoryDetail }) {
         hint={`Disabling ${category.name} will also disable all ${category.name} products.`}
       />
 
-      <FormCard>
-        <Form
-          form={form}
-          onSubmit={async values => {
-            await dispatch(updateCategory(category._id, values));
-          }}
-        >
+      <Form
+        form={form}
+        className='space-y-8'
+        onSubmit={async values => {
+          await dispatch(updateCategory(category._id, values));
+        }}
+      >
+        <FormSection title='Details'>
           <TextField
             control={form.control}
             name='name'
@@ -131,24 +132,24 @@ function EditCategoryForm({ category }: { category: CategoryDetail }) {
             options={productOptions}
             required
           />
-          <FormActions>
-            <SubmitButton loading={form.formState.isSubmitting}>
-              Save
-            </SubmitButton>
-            <ConfirmDialog
-              title={`Delete ${category.name}?`}
-              description='This permanently removes the category. This action cannot be undone.'
-              confirmLabel='Delete category'
-              onConfirm={() => dispatch(deleteCategory(category._id))}
-              trigger={
-                <Button type='button' variant='destructive'>
-                  <Trash2 /> Delete
-                </Button>
-              }
-            />
-          </FormActions>
-        </Form>
-      </FormCard>
+        </FormSection>
+        <FormActions>
+          <SubmitButton loading={form.formState.isSubmitting}>
+            Save
+          </SubmitButton>
+          <ConfirmDialog
+            title={`Delete ${category.name}?`}
+            description='This permanently removes the category. This action cannot be undone.'
+            confirmLabel='Delete category'
+            onConfirm={() => dispatch(deleteCategory(category._id))}
+            trigger={
+              <Button type='button' variant='destructive'>
+                <Trash2 /> Delete
+              </Button>
+            }
+          />
+        </FormActions>
+      </Form>
     </div>
   );
 }
@@ -175,7 +176,7 @@ export function EditCategoryPage({ id }: { id: string }) {
   return (
     <SubPage
       title='Edit Category'
-      description='Update the category details and its products.'
+      description='Change the category details and its products.'
       actions={<CancelButton />}
     >
       {!loaded ? (

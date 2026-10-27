@@ -47,7 +47,7 @@ export function OrderSuccessView({ id }: { id: string }) {
             Order{' '}
             <Link
               href={`/order/${order._id}?success`}
-              className='tabular font-mono font-semibold break-all underline underline-offset-4 decoration-brand decoration-2'
+              className='tabular font-mono font-semibold break-all underline decoration-brand decoration-2 underline-offset-4'
             >
               #{order._id}
             </Link>{' '}

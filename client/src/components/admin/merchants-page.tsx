@@ -57,7 +57,7 @@ export function MerchantsPage() {
   return (
     <SubPage
       title='Merchants'
-      description='Review applications and manage merchant accounts.'
+      description='Applications and merchant accounts.'
       actions={
         <Button size='sm' asChild>
           <Link href='/dashboard/merchant/add'>
@@ -66,7 +66,7 @@ export function MerchantsPage() {
         </Button>
       }
     >
-      <div className='space-y-5'>
+      <div className='space-y-6'>
         <ListSearch
           label='Search merchants'
           placeholder='Type email, phone number, brand or status'
@@ -76,13 +76,13 @@ export function MerchantsPage() {
         {!loaded || (isLoading && filtered.length === 0) ? (
           <InlineLoader label='Loading merchants' />
         ) : filtered.length > 0 ? (
-          <div className='space-y-5' aria-busy={isLoading}>
+          <div className='space-y-4' aria-busy={isLoading}>
             <ResultCount
               count={isSearch ? filtered.length : count}
               singular='merchant'
               plural='merchants'
             />
-            <ul className='grid gap-4 xl:grid-cols-2'>
+            <ul className='divide-y border-y border-foreground'>
               {filtered.map(merchant => (
                 <li key={merchant._id}>
                   <MerchantCard

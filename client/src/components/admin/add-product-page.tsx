@@ -10,7 +10,6 @@ import {
   NumberField,
   SelectField,
   SubmitButton,
-  SwitchField,
   TextField,
   TextareaField,
   useZodForm
@@ -29,7 +28,8 @@ import { fetchBrandsSelect } from '@/store/brand/actions';
 import { addProduct } from '@/store/product/actions';
 
 import { CancelButton } from './cancel-button';
-import { FormActions, FormCard, FormSection } from './form-parts';
+import { ActiveSwitchField } from './active-switch-field';
+import { FormActions, FormSection } from './form-parts';
 
 export function AddProductPage() {
   const dispatch = useAppDispatch();
@@ -76,125 +76,122 @@ export function AddProductPage() {
   return (
     <SubPage
       title='Add Product'
-      description='Fill in the details to list a new product in the shop.'
+      description='Add a product to the shop.'
       actions={<CancelButton />}
     >
-      <FormCard>
-        <Form
-          form={form}
-          className='space-y-8'
-          onSubmit={async values => {
-            await dispatch(addProduct(values));
-          }}
-        >
-          <FormSection title='Details'>
-            <div className='grid gap-5 lg:grid-cols-2'>
-              <TextField
-                control={form.control}
-                name='sku'
-                label='Sku'
-                placeholder='Product Sku'
-                autoComplete='off'
-                required
-              />
-              <TextField
-                control={form.control}
-                name='name'
-                label='Name'
-                placeholder='Product Name'
-                autoComplete='off'
-                required
-              />
-            </div>
-            <TextareaField
+      <Form
+        form={form}
+        className='space-y-8'
+        onSubmit={async values => {
+          await dispatch(addProduct(values));
+        }}
+      >
+        <FormSection title='Details'>
+          <div className='grid gap-5 lg:grid-cols-2'>
+            <TextField
               control={form.control}
-              name='description'
-              label='Description'
-              placeholder='Product Description'
-              required
-              description={
-                <span
-                  className={cn(
-                    description.length > DESCRIPTION_MAX_LENGTH &&
-                      'text-destructive'
-                  )}
-                >
-                  {description.length}/{DESCRIPTION_MAX_LENGTH} characters
-                </span>
-              }
-            />
-          </FormSection>
-
-          <FormSection title='Pricing & inventory'>
-            <div className='grid gap-5 lg:grid-cols-2'>
-              <NumberField
-                control={form.control}
-                name='quantity'
-                label='Quantity'
-                placeholder='Product Quantity'
-                valueAs='string'
-                integer
-                min={0}
-                required
-              />
-              <NumberField
-                control={form.control}
-                name='price'
-                label='Price'
-                placeholder='Product Price'
-                valueAs='string'
-                min={0}
-                prefix='$'
-                required
-              />
-            </div>
-            <SelectField
-              control={form.control}
-              name='taxable'
-              label='Taxable'
-              options={[...taxableOptions]}
+              name='sku'
+              label='Sku'
+              placeholder='Product Sku'
+              autoComplete='off'
               required
             />
-          </FormSection>
-
-          <FormSection title='Brand & visibility'>
-            <SelectField
+            <TextField
               control={form.control}
-              name='brand'
-              label='Select Brand'
-              placeholder='Select a brand'
-              options={brandOptions}
-              disabled={isMerchant}
-              description={
-                isMerchant ? 'Merchants sell under their own brand.' : undefined
-              }
+              name='name'
+              label='Name'
+              placeholder='Product Name'
+              autoComplete='off'
               required
             />
-            <SwitchField
-              control={form.control}
-              name='isActive'
-              label='Active?'
-              description='Inactive products are hidden from the shop.'
-            />
-          </FormSection>
+          </div>
+          <TextareaField
+            control={form.control}
+            name='description'
+            label='Description'
+            placeholder='Product Description'
+            required
+            description={
+              <span
+                className={cn(
+                  description.length > DESCRIPTION_MAX_LENGTH &&
+                    'text-destructive'
+                )}
+              >
+                {description.length}/{DESCRIPTION_MAX_LENGTH} characters
+              </span>
+            }
+          />
+        </FormSection>
 
-          <FormSection title='Image'>
-            <FileField
+        <FormSection title='Pricing & inventory'>
+          <div className='grid gap-5 lg:grid-cols-2'>
+            <NumberField
               control={form.control}
-              name='image'
-              label='Product image'
-              description='Upload a JPG or PNG photo.'
+              name='quantity'
+              label='Quantity'
+              placeholder='Product Quantity'
+              valueAs='string'
+              integer
+              min={0}
               required
             />
-          </FormSection>
+            <NumberField
+              control={form.control}
+              name='price'
+              label='Price'
+              placeholder='Product Price'
+              valueAs='string'
+              min={0}
+              prefix='$'
+              required
+            />
+          </div>
+          <SelectField
+            control={form.control}
+            name='taxable'
+            label='Taxable'
+            options={[...taxableOptions]}
+            required
+          />
+        </FormSection>
 
-          <FormActions>
-            <SubmitButton loading={form.formState.isSubmitting}>
-              Add Product
-            </SubmitButton>
-          </FormActions>
-        </Form>
-      </FormCard>
+        <FormSection title='Brand & visibility'>
+          <SelectField
+            control={form.control}
+            name='brand'
+            label='Select Brand'
+            placeholder='Select a brand'
+            options={brandOptions}
+            disabled={isMerchant}
+            description={
+              isMerchant ? 'Merchants sell under their own brand.' : undefined
+            }
+            required
+          />
+          <ActiveSwitchField
+            control={form.control}
+            name='isActive'
+            hint='Inactive products are hidden from the shop.'
+          />
+        </FormSection>
+
+        <FormSection title='Image'>
+          <FileField
+            control={form.control}
+            name='image'
+            label='Product image'
+            description='Upload a JPG or PNG photo.'
+            required
+          />
+        </FormSection>
+
+        <FormActions>
+          <SubmitButton loading={form.formState.isSubmitting}>
+            Add Product
+          </SubmitButton>
+        </FormActions>
+      </Form>
     </SubPage>
   );
 }

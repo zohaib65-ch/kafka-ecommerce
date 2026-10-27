@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import Link from 'next/link';
-import { LayoutGrid, Plus } from 'lucide-react';
+import { Pencil, Plus } from 'lucide-react';
 
 import { SubPage } from '@/components/dashboard/sub-page';
 import { EmptyState } from '@/components/shared/empty-state';
@@ -11,8 +11,65 @@ import { StatusBadge } from '@/components/shared/status-badge';
 import { Button } from '@/components/ui/button';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchCategories } from '@/store/category/actions';
+import type { Category } from '@/types';
 
+import { ResponsiveTable, type Column } from './responsive-table';
 import { useLoad } from './use-load';
+
+const columns: Column<Category>[] = [
+  {
+    id: 'category',
+    header: 'Category',
+    primary: true,
+    className: 'w-full max-w-0',
+    cell: category => (
+      <div className='min-w-0'>
+        <Link
+          href={`/dashboard/category/edit/${category._id}`}
+          className='block truncate font-semibold underline-offset-4 hover:underline hover:decoration-brand hover:decoration-2'
+        >
+          {category.name}
+        </Link>
+        <p className='truncate text-sm text-muted-foreground'>
+          {category.description}
+        </p>
+      </div>
+    )
+  },
+  {
+    id: 'products',
+    header: 'Products',
+    cell: category => (
+      <span className='tabular'>{category.products?.length ?? 0}</span>
+    )
+  },
+  {
+    id: 'status',
+    header: 'Status',
+    cell: category => (
+      <StatusBadge
+        status={category.isActive ? 'Active' : 'Disabled'}
+        tone={category.isActive ? 'success' : 'neutral'}
+      />
+    )
+  },
+  {
+    id: 'actions',
+    header: 'Actions',
+    hideLabel: true,
+    className: 'text-right',
+    cell: category => (
+      <Button variant='outline' size='sm' asChild>
+        <Link
+          href={`/dashboard/category/edit/${category._id}`}
+          aria-label={`Edit ${category.name}`}
+        >
+          <Pencil /> Edit
+        </Link>
+      </Button>
+    )
+  }
+];
 
 export function CategoriesPage() {
   const dispatch = useAppDispatch();
@@ -26,7 +83,7 @@ export function CategoriesPage() {
   return (
     <SubPage
       title='Categories'
-      description='Group products so shoppers can browse them by department.'
+      description='Groups that shoppers browse the shop by.'
       actions={
         <Button size='sm' asChild>
           <Link href='/dashboard/category/add'>
@@ -38,40 +95,12 @@ export function CategoriesPage() {
       {!loaded || isLoading ? (
         <InlineLoader label='Loading categories' />
       ) : categories.length > 0 ? (
-        <ul className='grid gap-4 sm:grid-cols-2'>
-          {categories.map(category => (
-            <li key={category._id}>
-              <Link
-                href={`/dashboard/category/edit/${category._id}`}
-                className='flex h-full flex-col gap-3 rounded-2xl border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-soft focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none'
-              >
-                <div className='flex items-start justify-between gap-3'>
-                  <span className='grid size-10 shrink-0 place-items-center rounded-xl bg-accent text-accent-foreground'>
-                    <LayoutGrid className='size-5' aria-hidden='true' />
-                  </span>
-                  <StatusBadge
-                    status={category.isActive ? 'Active' : 'Disabled'}
-                    tone={category.isActive ? 'success' : 'neutral'}
-                  />
-                </div>
-                <div className='min-w-0 flex-1'>
-                  <h2 className='truncate text-base font-semibold'>
-                    {category.name}
-                  </h2>
-                  <p className='mt-1 line-clamp-2 text-sm text-muted-foreground'>
-                    {category.description}
-                  </p>
-                </div>
-                <p className='text-sm text-muted-foreground'>
-                  {category.products?.length ?? 0}{' '}
-                  {(category.products?.length ?? 0) === 1
-                    ? 'product'
-                    : 'products'}
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ResponsiveTable
+          caption='Categories'
+          rows={categories}
+          columns={columns}
+          getRowKey={category => category._id}
+        />
       ) : (
         <EmptyState message='No categories found.' />
       )}

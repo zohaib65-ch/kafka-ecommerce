@@ -31,16 +31,13 @@ export function ReviewsPage() {
   );
 
   return (
-    <SubPage
-      title='Reviews'
-      description='Moderate what shoppers write about products.'
-    >
+    <SubPage title='Reviews' description='What shoppers wrote about products.'>
       {!loaded || (isLoading && reviews.length === 0) ? (
         <InlineLoader label='Loading reviews' />
       ) : reviews.length > 0 ? (
-        <div className='space-y-5' aria-busy={isLoading}>
+        <div className='space-y-4' aria-busy={isLoading}>
           <ResultCount count={count} singular='review' plural='reviews' />
-          <ul className='space-y-4'>
+          <ul className='divide-y border-y border-foreground'>
             {reviews.map(review => (
               <li key={review._id}>
                 <ReviewCard

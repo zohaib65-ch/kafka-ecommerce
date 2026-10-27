@@ -4,8 +4,7 @@ import { ShopCatalog } from '@/components/store/shop-catalog';
 
 export const metadata: Metadata = {
   title: 'Shop',
-  description:
-    'Browse all products. Filter by price and rating and sort to find your next favorite.'
+  description: 'Everything in the store. Filter by price and rating, then sort.'
 };
 
 export default function ShopPage() {

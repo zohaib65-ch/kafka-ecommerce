@@ -13,15 +13,17 @@ export default function ContactPage() {
   return (
     <div className='container-page py-10 lg:py-14'>
       <PageHeader
-        eyebrow='Customer service'
-        title='Contact Information'
-        description='Questions about an order, a product or selling with us? Send us a message and we will get back to you.'
+        title='Contact us'
+        description='A question about an order, a product or selling with us? Send a message and we will get back to you.'
       />
-      <div className='mt-10 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:gap-12'>
-        <div className='h-fit rounded-3xl border bg-card p-6 shadow-soft sm:p-10'>
-          <ContactForm />
-        </div>
+      <div className='mt-12 grid gap-12 lg:grid-cols-[5fr_7fr] lg:gap-0'>
         <ContactDetails />
+        <div className='lg:border-l lg:pl-14'>
+          <h2 className='mb-6 text-3xl'>Send a message</h2>
+          <div className='max-w-xl'>
+            <ContactForm />
+          </div>
+        </div>
       </div>
     </div>
   );

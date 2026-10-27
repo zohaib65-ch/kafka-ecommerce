@@ -4,7 +4,7 @@ import { BrandsGrid } from '@/components/store/brands-grid';
 
 export const metadata: Metadata = {
   title: 'Brands',
-  description: 'Shop by brand: explore products from every brand in the store.'
+  description: 'Every brand in the store, A to Z.'
 };
 
 export default function BrandsPage() {

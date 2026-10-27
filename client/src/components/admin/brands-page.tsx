@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import Link from 'next/link';
-import { Plus, Tag } from 'lucide-react';
+import { Pencil, Plus } from 'lucide-react';
 
 import { SubPage } from '@/components/dashboard/sub-page';
 import { EmptyState } from '@/components/shared/empty-state';
@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchBrands } from '@/store/brand/actions';
 import type { Brand } from '@/types';
 
+import { ResponsiveTable, type Column } from './responsive-table';
 import { useLoad } from './use-load';
 
 // The dashboard list populates the owner merchant (`GET /brand`), unlike the plain Brand type.
@@ -39,12 +40,68 @@ export function BrandsPage() {
     useCallback(() => dispatch(fetchBrands()), [dispatch])
   );
 
+  const columns: Column<ListedBrand>[] = [
+    {
+      id: 'brand',
+      header: 'Brand',
+      primary: true,
+      className: 'w-full max-w-0',
+      cell: brand => (
+        <div className='min-w-0'>
+          <Link
+            href={`/dashboard/brand/edit/${brand._id}`}
+            className='block truncate font-semibold underline-offset-4 hover:underline hover:decoration-brand hover:decoration-2'
+          >
+            {brand.name}
+          </Link>
+          <p className='truncate text-sm text-muted-foreground'>
+            {brand.description}
+          </p>
+        </div>
+      )
+    },
+    {
+      id: 'merchant',
+      header: 'Merchant',
+      cell: brand =>
+        brand.merchant && brand.merchant._id !== userMerchantId
+          ? brand.merchant.name
+          : '–'
+    },
+    {
+      id: 'status',
+      header: 'Status',
+      cell: brand => (
+        <StatusBadge
+          status={brand.isActive ? 'Active' : 'Disabled'}
+          tone={brand.isActive ? 'success' : 'neutral'}
+        />
+      )
+    },
+    {
+      id: 'actions',
+      header: 'Actions',
+      hideLabel: true,
+      className: 'text-right',
+      cell: brand => (
+        <Button variant='outline' size='sm' asChild>
+          <Link
+            href={`/dashboard/brand/edit/${brand._id}`}
+            aria-label={`Edit ${brand.name}`}
+          >
+            <Pencil /> Edit
+          </Link>
+        </Button>
+      )
+    }
+  ];
+
   return (
     <SubPage
       title={isAdmin ? 'Brands' : 'Brand'}
       description={
         isAdmin
-          ? 'Brands that products can be listed under.'
+          ? 'Brands that products are listed under.'
           : 'The brand your products are listed under.'
       }
       actions={
@@ -60,42 +117,12 @@ export function BrandsPage() {
       {!loaded || isLoading ? (
         <InlineLoader label='Loading brands' />
       ) : brands.length > 0 ? (
-        <ul className='grid gap-4 sm:grid-cols-2'>
-          {brands.map(brand => (
-            <li key={brand._id}>
-              <Link
-                href={`/dashboard/brand/edit/${brand._id}`}
-                className='flex h-full flex-col gap-3 rounded-2xl border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-soft focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none'
-              >
-                <div className='flex items-start justify-between gap-3'>
-                  <span className='grid size-10 shrink-0 place-items-center rounded-xl bg-accent text-accent-foreground'>
-                    <Tag className='size-5' aria-hidden='true' />
-                  </span>
-                  <StatusBadge
-                    status={brand.isActive ? 'Active' : 'Disabled'}
-                    tone={brand.isActive ? 'success' : 'neutral'}
-                  />
-                </div>
-                <div className='min-w-0 flex-1'>
-                  <h2 className='truncate text-base font-semibold'>
-                    {brand.name}
-                  </h2>
-                  <p className='mt-1 line-clamp-2 text-sm text-muted-foreground'>
-                    {brand.description}
-                  </p>
-                </div>
-                {brand.merchant && brand.merchant._id !== userMerchantId && (
-                  <p className='text-sm'>
-                    <span className='text-muted-foreground'>By </span>
-                    <span className='font-medium text-primary'>
-                      {brand.merchant.name}
-                    </span>
-                  </p>
-                )}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ResponsiveTable
+          caption='Brands'
+          rows={brands}
+          columns={columns}
+          getRowKey={brand => brand._id}
+        />
       ) : (
         <EmptyState message='No brands found.' />
       )}

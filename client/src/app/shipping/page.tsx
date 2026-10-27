@@ -1,55 +1,51 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Headset, PackageCheck, Truck } from 'lucide-react';
 
 import { PageHeader } from '@/components/shared/page-header';
 import { Button } from '@/components/ui/button';
+import { SUPPORT_PHONE } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'Shipping',
   description: 'Shipping information for orders placed on Marketlane.'
 };
 
-const highlights = [
+const sections = [
   {
-    icon: Truck,
-    title: 'Free shipping',
-    text: 'Every order ships free. The bag total you see is the total you pay.'
+    title: 'Free shipping on every order',
+    text: 'The total in your bag is the total you pay. There is no shipping fee.'
   },
   {
-    icon: PackageCheck,
     title: 'Follow your order',
-    text: 'Sign in and open Orders in your dashboard to see the status of each item as it is processed, shipped and delivered.'
+    text: 'Sign in and open Orders in your dashboard. Each item shows where it is: processing, shipped or delivered.'
   },
   {
-    icon: Headset,
-    title: 'Need a hand?',
-    text: 'Questions about a delivery? Our team is happy to help with anything about your order.'
+    title: 'Questions about a delivery',
+    text: `Send us a message or call ${SUPPORT_PHONE} and we will look into it.`
   }
 ];
 
 export default function ShippingPage() {
   return (
-    <div className='container-page max-w-4xl py-12 lg:py-16'>
+    <div className='container-page py-10 lg:py-14'>
       <PageHeader
-        eyebrow='Customer service'
         title='Shipping'
-        description='Simple, transparent delivery on everything in the store.'
+        description='Delivery on Marketlane is free.'
       />
 
-      <ul className='mt-10 grid gap-4 sm:grid-cols-3'>
-        {highlights.map(({ icon: Icon, title, text }) => (
-          <li key={title} className='rounded-2xl border bg-card p-6'>
-            <span className='grid size-11 place-items-center rounded-xl bg-accent text-accent-foreground'>
-              <Icon className='size-5' aria-hidden='true' />
-            </span>
-            <h2 className='mt-4 text-lg font-semibold'>{title}</h2>
-            <p className='mt-2 text-sm leading-relaxed text-muted-foreground'>
-              {text}
-            </p>
-          </li>
+      <dl className='mt-12 max-w-4xl divide-y border-y'>
+        {sections.map(({ title, text }) => (
+          <div
+            key={title}
+            className='grid gap-2 py-6 sm:grid-cols-[22rem_1fr] sm:gap-10'
+          >
+            <dt className='font-heading text-3xl leading-tight font-semibold'>
+              {title}
+            </dt>
+            <dd className='text-lg text-muted-foreground'>{text}</dd>
+          </div>
         ))}
-      </ul>
+      </dl>
 
       <div className='mt-10 flex flex-wrap gap-3'>
         <Button asChild>

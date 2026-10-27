@@ -6,8 +6,8 @@ type ResultCountProps = {
 
 export function ResultCount({ count, singular, plural }: ResultCountProps) {
   return (
-    <p className='text-sm text-muted-foreground' aria-live='polite'>
-      <span className='font-medium text-foreground'>{count}</span>{' '}
+    <p className='meta' aria-live='polite'>
+      <span className='tabular text-foreground'>{count}</span>{' '}
       {count === 1 ? singular : plural}
     </p>
   );

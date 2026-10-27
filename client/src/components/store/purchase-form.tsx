@@ -1,7 +1,7 @@
 'use client';
 
 import { useId, useMemo } from 'react';
-import { Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 import { Controller } from 'react-hook-form';
 
 import { Form, SubmitButton, useZodForm } from '@/components/forms';
@@ -63,46 +63,46 @@ export function PurchaseForm({ product }: PurchaseFormProps) {
 
           return (
             <Field data-invalid={fieldState.invalid} className='max-w-xs'>
-              <FieldLabel htmlFor={quantityId}>Quantity</FieldLabel>
-              <div>
-                <div className='inline-flex h-12 w-fit items-center rounded-xl border bg-card'>
-                  <Button
-                    type='button'
-                    variant='ghost'
-                    size='icon-lg'
-                    className='rounded-r-none'
-                    aria-label='Decrease quantity'
-                    disabled={outOfStock || current <= 1}
-                    onClick={() => set(current - 1)}
-                  >
-                    <Minus />
-                  </Button>
-                  <Input
-                    {...field}
-                    id={quantityId}
-                    type='number'
-                    inputMode='numeric'
-                    min={1}
-                    max={max}
-                    step={1}
-                    disabled={outOfStock}
-                    placeholder='Product Quantity'
-                    aria-invalid={fieldState.invalid}
-                    aria-describedby={`${quantityId}-hint`}
-                    className='h-11 w-16 [appearance:textfield] rounded-none border-0 bg-transparent px-0 text-center text-base font-medium shadow-none focus-visible:ring-0 dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
-                  />
-                  <Button
-                    type='button'
-                    variant='ghost'
-                    size='icon-lg'
-                    className='rounded-l-none'
-                    aria-label='Increase quantity'
-                    disabled={outOfStock || current >= max}
-                    onClick={() => set(current + 1)}
-                  >
-                    <Plus />
-                  </Button>
-                </div>
+              <FieldLabel htmlFor={quantityId} className='meta'>
+                Quantity
+              </FieldLabel>
+              <div className='inline-flex h-12 w-fit items-center border border-foreground'>
+                <Button
+                  type='button'
+                  variant='ghost'
+                  size='icon-lg'
+                  className='rounded-none'
+                  aria-label='Decrease quantity'
+                  disabled={outOfStock || current <= 1}
+                  onClick={() => set(current - 1)}
+                >
+                  <Minus />
+                </Button>
+                <Input
+                  {...field}
+                  id={quantityId}
+                  type='number'
+                  inputMode='numeric'
+                  min={1}
+                  max={max}
+                  step={1}
+                  disabled={outOfStock}
+                  placeholder='Product Quantity'
+                  aria-invalid={fieldState.invalid}
+                  aria-describedby={`${quantityId}-hint`}
+                  className='tabular h-11 w-16 [appearance:textfield] rounded-none border-0 bg-transparent px-0 text-center text-base font-semibold focus-visible:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+                />
+                <Button
+                  type='button'
+                  variant='ghost'
+                  size='icon-lg'
+                  className='rounded-none'
+                  aria-label='Increase quantity'
+                  disabled={outOfStock || current >= max}
+                  onClick={() => set(current + 1)}
+                >
+                  <Plus />
+                </Button>
               </div>
               <FieldDescription id={`${quantityId}-hint`}>
                 {outOfStock
@@ -115,25 +115,25 @@ export function PurchaseForm({ product }: PurchaseFormProps) {
         }}
       />
 
-      <div className='flex flex-wrap items-center gap-3'>
+      <div className='flex items-stretch gap-3'>
         {itemInCart ? (
           <Button
             type='button'
             size='lg'
             variant='outline'
-            className='min-w-52 flex-1 sm:flex-none'
+            className='flex-1'
             disabled={outOfStock}
             onClick={() => dispatch(handleRemoveFromCart(product))}
           >
-            <Trash2 /> Remove From Bag
+            Remove From Bag
           </Button>
         ) : (
           <SubmitButton
             size='lg'
-            className='min-w-52 flex-1 sm:flex-none'
+            className='flex-1'
             disabled={product.quantity <= 0}
           >
-            <ShoppingBag /> Add To Bag
+            Add To Bag
           </SubmitButton>
         )}
         <WishlistButton

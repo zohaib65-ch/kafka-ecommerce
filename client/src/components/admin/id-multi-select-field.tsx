@@ -90,6 +90,7 @@ export function IdMultiSelectField<T extends FieldValues>({
               }
               onBlur={field.onBlur}
               placeholder={placeholder}
+              className='text-sm font-normal tracking-normal normal-case'
               disabled={disabled}
               invalid={fieldState.invalid}
               aria-describedby={describedBy}

@@ -60,16 +60,15 @@ export function ShareButtons({ product }: ShareButtonsProps) {
   ];
 
   return (
-    <div className='flex flex-wrap items-center gap-3'>
-      <span className='text-sm font-medium text-muted-foreground'>Share</span>
-      <ul className='flex items-center gap-2'>
+    <div className='flex flex-wrap items-center gap-4'>
+      <span className='meta'>Share</span>
+      <ul className='flex items-center gap-1'>
         {items.map(item => (
           <li key={item.label}>
             <Button
               type='button'
               variant='outline'
               size='icon'
-              className='rounded-full'
               aria-label={item.label}
               onClick={item.onClick}
             >

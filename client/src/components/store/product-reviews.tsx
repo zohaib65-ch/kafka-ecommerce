@@ -14,16 +14,18 @@ export function ProductReviews() {
     <section
       id='reviews'
       aria-labelledby='reviews-title'
-      className='mt-16 scroll-mt-28 lg:mt-24'
+      className='mt-20 scroll-mt-28 lg:mt-28'
     >
-      <h2 id='reviews-title' className='text-2xl font-semibold sm:text-3xl'>
-        Customer reviews
-      </h2>
-      <div className='mt-8 grid gap-8 lg:grid-cols-[5fr_7fr] lg:items-start'>
-        <div className='lg:sticky lg:top-28'>
+      <div className='section-rule pt-4'>
+        <h2 id='reviews-title' className='text-4xl sm:text-5xl'>
+          Customer reviews
+        </h2>
+      </div>
+      <div className='mt-8 grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12'>
+        <div className='lg:sticky lg:top-24 lg:col-span-4'>
           <ReviewSummary summary={summary} />
         </div>
-        <div className='space-y-6'>
+        <div className='space-y-10 lg:col-span-8'>
           {reviews.length > 0 && <ReviewList reviews={reviews} />}
           <ReviewForm />
         </div>

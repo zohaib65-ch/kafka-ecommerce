@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Store } from 'lucide-react';
 
 import { AuthShell } from '@/components/auth/auth-shell';
 import { MerchantSignupForm } from '@/components/auth/merchant-signup-form';
@@ -24,16 +23,7 @@ export default async function MerchantSignupPage({
   return (
     <AuthShell
       title='Complete Sign Up'
-      description={
-        <>
-          <Store
-            className='mr-1.5 mb-0.5 inline size-4 text-primary'
-            aria-hidden='true'
-          />
-          Your seller application was accepted. Create your merchant account to
-          get started.
-        </>
-      }
+      description='Your seller application was accepted. Create your merchant account to continue.'
     >
       <MerchantSignupForm
         token={token}

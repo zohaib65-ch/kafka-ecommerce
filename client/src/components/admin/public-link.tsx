@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
 
-/** "Product link /my-slug": where the item lives in the shop. */
+/** "Product link my-slug": where the item lives in the shop. */
 export function PublicLink({
   label,
   href,
@@ -12,14 +11,13 @@ export function PublicLink({
   slug: string;
 }) {
   return (
-    <p className='flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground'>
+    <p className='flex flex-wrap items-baseline gap-x-2 text-sm text-muted-foreground'>
       <span>{label}</span>
       <Link
         href={href}
-        className='inline-flex items-center gap-1 font-medium text-primary hover:underline'
+        className='font-medium text-foreground underline decoration-brand decoration-2 underline-offset-4'
       >
         {slug}
-        <ExternalLink className='size-3.5' aria-hidden='true' />
       </Link>
     </p>
   );

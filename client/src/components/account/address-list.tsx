@@ -13,7 +13,7 @@ export function AddressList({ addresses }: { addresses: Address[] }) {
             aria-label={`Edit address: ${address.address}`}
             className='group flex h-full flex-col gap-4 border bg-card p-5 transition-colors hover:border-foreground'
           >
-            <span className='flex items-center justify-between gap-3'>
+            <span className='flex min-h-5 items-center justify-between gap-3'>
               <span className='meta'>
                 {address.isDefault
                   ? 'Default Delivery Address'

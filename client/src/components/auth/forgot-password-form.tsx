@@ -27,7 +27,7 @@ export function ForgotPasswordForm() {
         name='email'
         type='email'
         label='Email Address'
-        placeholder='Please Enter Your Email'
+        placeholder='you@example.com'
         autoComplete='email'
       />
       <SubmitButton
@@ -35,7 +35,7 @@ export function ForgotPasswordForm() {
         className='w-full'
         loading={form.formState.isSubmitting}
       >
-        Send Email
+        Send reset link
       </SubmitButton>
     </Form>
   );

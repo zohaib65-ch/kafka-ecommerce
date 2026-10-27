@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge';
-import { getAvatarColor, cn } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 import type { SupportUser } from './types';
 
@@ -17,7 +17,7 @@ export function UserList({
   onSelect
 }: UserListProps) {
   return (
-    <ul className='p-2'>
+    <ul className='divide-y border-b'>
       {users.map(user => {
         const selected = user.id === selectedId;
         const count = unread[user.id] ?? 0;
@@ -29,33 +29,34 @@ export function UserList({
               onClick={() => onSelect(user)}
               aria-current={selected ? 'true' : undefined}
               className={cn(
-                'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none',
-                selected ? 'bg-accent text-accent-foreground' : 'hover:bg-muted'
+                'flex min-h-14 w-full items-center gap-3 border-l-4 px-4 py-3 text-left transition-colors focus-visible:bg-accent',
+                selected
+                  ? 'border-l-brand bg-accent'
+                  : 'border-l-transparent hover:bg-accent/60'
               )}
             >
-              <span
-                className='relative grid size-10 shrink-0 place-items-center rounded-full text-sm font-semibold text-white'
-                style={{ backgroundColor: getAvatarColor(user.id) }}
-                aria-hidden='true'
-              >
-                {user.name.charAt(0).toUpperCase()}
-                <span
-                  className={cn(
-                    'absolute -right-0.5 -bottom-0.5 size-3 rounded-full border-2 border-card',
-                    user.online ? 'bg-success' : 'bg-muted-foreground/40'
-                  )}
-                />
-              </span>
               <span className='min-w-0 flex-1'>
-                <span className='block truncate text-sm font-medium'>
+                <span className='block truncate font-semibold'>
                   {user.name}
                 </span>
-                <span className='block text-xs text-muted-foreground'>
+                <span className='meta mt-0.5 flex items-center gap-1.5'>
+                  <span
+                    aria-hidden='true'
+                    className={cn(
+                      'size-2',
+                      user.online ? 'bg-success' : 'bg-muted-foreground/40'
+                    )}
+                  />
                   {user.online ? 'Online' : 'Offline'}
                 </span>
               </span>
               {count > 0 && (
-                <Badge aria-label={`${count} unread messages`}>{count}</Badge>
+                <Badge
+                  className='bg-brand text-brand-foreground'
+                  aria-label={`${count} unread messages`}
+                >
+                  {count}
+                </Badge>
               )}
             </button>
           </li>

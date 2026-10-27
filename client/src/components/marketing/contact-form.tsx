@@ -30,7 +30,7 @@ export function ContactForm() {
           control={form.control}
           name='name'
           label='Name'
-          placeholder='You Full Name'
+          placeholder='Your name'
           autoComplete='name'
         />
         <TextField
@@ -38,7 +38,7 @@ export function ContactForm() {
           name='email'
           type='email'
           label='Email'
-          placeholder='Your Email Address'
+          placeholder='you@example.com'
           autoComplete='email'
         />
       </div>
@@ -46,7 +46,7 @@ export function ContactForm() {
         control={form.control}
         name='message'
         label='Message'
-        placeholder='Please Describe Your Message'
+        placeholder='How can we help?'
         rows={6}
       />
       <SubmitButton
@@ -54,7 +54,7 @@ export function ContactForm() {
         className='w-full sm:w-auto'
         loading={form.formState.isSubmitting}
       >
-        Submit
+        Send message
       </SubmitButton>
     </Form>
   );

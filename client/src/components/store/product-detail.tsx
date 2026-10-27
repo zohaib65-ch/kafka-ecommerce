@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { PackageX, Tag, Truck } from 'lucide-react';
 
 import { EmptyState } from '@/components/shared/empty-state';
 import { ProductImage } from '@/components/shared/product-image';
@@ -17,7 +16,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatPrice } from '@/lib/format';
 import { cn } from '@/lib/utils';
@@ -31,13 +29,13 @@ import { ShareButtons } from './share-buttons';
 
 function ProductDetailSkeleton() {
   return (
-    <div className='grid gap-8 lg:grid-cols-2 lg:gap-14' aria-hidden='true'>
-      <Skeleton className='aspect-square w-full rounded-3xl' />
-      <div className='space-y-4'>
+    <div className='grid gap-8 lg:grid-cols-12 lg:gap-12' aria-hidden='true'>
+      <Skeleton className='aspect-square w-full lg:col-span-7' />
+      <div className='space-y-4 lg:col-span-5'>
         <Skeleton className='h-4 w-40' />
-        <Skeleton className='h-10 w-4/5' />
+        <Skeleton className='h-14 w-4/5' />
         <Skeleton className='h-4 w-28' />
-        <Skeleton className='h-9 w-32' />
+        <Skeleton className='h-14 w-32' />
         <Skeleton className='h-24 w-full' />
         <Skeleton className='h-12 w-64' />
       </div>
@@ -76,7 +74,7 @@ export function ProductDetail({ slug }: { slug: string }) {
 
   return (
     <div className='container-page py-8 lg:py-12'>
-      <Breadcrumb className='mb-6'>
+      <Breadcrumb className='mb-8'>
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
@@ -106,7 +104,6 @@ export function ProductDetail({ slug }: { slug: string }) {
         <ProductDetailSkeleton />
       ) : !current ? (
         <EmptyState
-          icon={PackageX}
           title='No product found.'
           description='This product may have been removed or is no longer available.'
           action={
@@ -117,17 +114,17 @@ export function ProductDetail({ slug }: { slug: string }) {
         />
       ) : (
         <>
-          <div className='grid gap-8 lg:grid-cols-2 lg:gap-14'>
-            <div className='relative'>
+          <div className='grid gap-8 lg:grid-cols-12 lg:gap-12'>
+            <div className='relative lg:col-span-7'>
               <ProductImage
                 product={current}
                 priority
-                sizes='(min-width: 1024px) 560px, 100vw'
-                className='rounded-3xl border shadow-soft'
+                sizes='(min-width: 1280px) 700px, (min-width: 1024px) 58vw, 100vw'
+                className='border border-foreground'
               />
               <Badge
                 className={cn(
-                  'absolute top-4 left-4 h-7 px-3 text-xs shadow-sm',
+                  'absolute top-3 left-3 h-6 px-2',
                   outOfStock
                     ? 'bg-destructive text-white'
                     : 'bg-success text-success-foreground'
@@ -137,60 +134,52 @@ export function ProductDetail({ slug }: { slug: string }) {
               </Badge>
             </div>
 
-            <div className='space-y-6'>
-              <div className='space-y-3'>
-                {current.brand?.slug && (
-                  <p className='flex items-center gap-1.5 text-sm text-muted-foreground'>
-                    <Tag className='size-3.5' aria-hidden='true' />
-                    see more from{' '}
-                    <Link
-                      href={`/shop/brand/${current.brand.slug}`}
-                      className='font-medium text-primary hover:underline'
-                    >
-                      {current.brand.name}
-                    </Link>
-                  </p>
-                )}
-                <h1 className='text-3xl font-semibold sm:text-4xl'>
-                  {current.name}
-                </h1>
-                <p className='font-mono text-sm text-muted-foreground'>
-                  {current.sku}
-                </p>
-                {summary.totalReviews > 0 && (
-                  <a
-                    href='#reviews'
-                    className='inline-flex items-center gap-2 text-sm hover:underline'
+            <div className='lg:col-span-5'>
+              {current.brand?.slug && (
+                <p className='text-sm text-muted-foreground'>
+                  See more from{' '}
+                  <Link
+                    href={`/shop/brand/${current.brand.slug}`}
+                    className='font-semibold text-foreground underline decoration-brand decoration-2 underline-offset-4 hover:decoration-4'
                   >
-                    <StarRating value={average} size={18} />
-                    <span className='font-medium'>{average.toFixed(1)}</span>
-                    <span className='text-muted-foreground'>
-                      ({summary.totalReviews}{' '}
-                      {summary.totalReviews === 1 ? 'review' : 'reviews'})
-                    </span>
-                  </a>
-                )}
-              </div>
+                    {current.brand.name}
+                  </Link>
+                </p>
+              )}
+              <h1 className='mt-3 text-5xl sm:text-6xl'>{current.name}</h1>
+              <p className='meta mt-3'>SKU {current.sku}</p>
+              {summary.totalReviews > 0 && (
+                <a
+                  href='#reviews'
+                  className='mt-4 inline-flex items-center gap-2 text-sm hover:underline'
+                >
+                  <StarRating value={average} size={18} />
+                  <span className='tabular font-semibold'>
+                    {average.toFixed(1)}
+                  </span>
+                  <span className='text-muted-foreground'>
+                    ({summary.totalReviews}{' '}
+                    {summary.totalReviews === 1 ? 'review' : 'reviews'})
+                  </span>
+                </a>
+              )}
 
-              <p className='font-heading text-4xl font-semibold'>
+              <p className='tabular mt-6 font-heading text-7xl leading-none font-semibold'>
                 {formatPrice(current.price)}
               </p>
 
-              <p className='leading-relaxed text-pretty text-muted-foreground'>
+              <p className='mt-6 max-w-prose leading-relaxed text-pretty'>
                 {current.description}
               </p>
 
-              <Separator />
+              <div className='mt-8 border-t border-foreground pt-6'>
+                <PurchaseForm key={current._id} product={current} />
+              </div>
 
-              <PurchaseForm key={current._id} product={current} />
-
-              <Separator />
-
-              <div className='space-y-4'>
+              <div className='mt-8 space-y-4 border-t pt-6'>
                 <ShareButtons product={current} />
-                <p className='flex items-center gap-2 text-sm text-muted-foreground'>
-                  <Truck className='size-4 text-primary' aria-hidden='true' />
-                  Free shipping on every order
+                <p className='text-sm text-muted-foreground'>
+                  Free shipping on every order.
                 </p>
               </div>
             </div>

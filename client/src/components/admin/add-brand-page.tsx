@@ -6,7 +6,6 @@ import { SubPage } from '@/components/dashboard/sub-page';
 import {
   Form,
   SubmitButton,
-  SwitchField,
   TextField,
   TextareaField,
   useZodForm
@@ -18,7 +17,8 @@ import { useAppDispatch } from '@/store/hooks';
 import { addBrand } from '@/store/brand/actions';
 
 import { CancelButton } from './cancel-button';
-import { FormActions, FormCard } from './form-parts';
+import { ActiveSwitchField } from './active-switch-field';
+import { FormActions, FormSection } from './form-parts';
 
 export function AddBrandPage() {
   const dispatch = useAppDispatch();
@@ -31,16 +31,17 @@ export function AddBrandPage() {
   return (
     <SubPage
       title='Add Brand'
-      description='Create a brand that products can be listed under.'
+      description='Create a brand that products are listed under.'
       actions={<CancelButton />}
     >
-      <FormCard>
-        <Form
-          form={form}
-          onSubmit={async values => {
-            await dispatch(addBrand(values));
-          }}
-        >
+      <Form
+        form={form}
+        className='space-y-8'
+        onSubmit={async values => {
+          await dispatch(addBrand(values));
+        }}
+      >
+        <FormSection title='Details'>
           <TextField
             control={form.control}
             name='name'
@@ -66,19 +67,18 @@ export function AddBrandPage() {
               </span>
             }
           />
-          <SwitchField
+          <ActiveSwitchField
             control={form.control}
             name='isActive'
-            label='Active?'
-            description='Inactive brands are hidden from the shop.'
+            hint='Inactive brands are hidden from the shop.'
           />
-          <FormActions>
-            <SubmitButton loading={form.formState.isSubmitting}>
-              Add Brand
-            </SubmitButton>
-          </FormActions>
-        </Form>
-      </FormCard>
+        </FormSection>
+        <FormActions>
+          <SubmitButton loading={form.formState.isSubmitting}>
+            Add Brand
+          </SubmitButton>
+        </FormActions>
+      </Form>
     </SubPage>
   );
 }

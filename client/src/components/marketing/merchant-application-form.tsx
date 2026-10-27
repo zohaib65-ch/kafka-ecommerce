@@ -42,7 +42,7 @@ export function MerchantApplicationForm({
         control={form.control}
         name='name'
         label='Name'
-        placeholder='Your Full Name'
+        placeholder='Your full name'
         autoComplete='name'
       />
       <div className='grid gap-5 sm:grid-cols-2'>
@@ -51,7 +51,7 @@ export function MerchantApplicationForm({
           name='email'
           type='email'
           label='Email Address'
-          placeholder='Your Email Address'
+          placeholder='you@example.com'
           autoComplete='email'
         />
         <TextField
@@ -59,7 +59,7 @@ export function MerchantApplicationForm({
           name='phoneNumber'
           type='tel'
           label='Phone Number'
-          placeholder='Your Phone Number'
+          placeholder='951-999-9999'
           autoComplete='tel'
         />
       </div>
@@ -67,13 +67,13 @@ export function MerchantApplicationForm({
         control={form.control}
         name='brandName'
         label='Brand'
-        placeholder='Your Business Brand'
+        placeholder='Your brand name'
       />
       <TextareaField
         control={form.control}
         name='business'
         label='Business'
-        placeholder='Please Describe Your Business'
+        placeholder='What do you make or sell?'
         rows={5}
       />
       <SubmitButton

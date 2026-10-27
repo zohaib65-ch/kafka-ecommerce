@@ -36,7 +36,9 @@ export function AccountDetailsView() {
           <h2 className='text-3xl'>Sign-in</h2>
           <dl className='grid max-w-xl gap-x-6 gap-y-4 sm:grid-cols-[8rem_1fr]'>
             <dt className='meta self-center'>
-              {user.provider === EMAIL_PROVIDER.Email ? 'Email' : 'Logged in with'}
+              {user.provider === EMAIL_PROVIDER.Email
+                ? 'Email'
+                : 'Logged in with'}
             </dt>
             <dd className='min-w-0 truncate font-medium'>
               {user.provider === EMAIL_PROVIDER.Email

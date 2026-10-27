@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { HeartOff, X } from 'lucide-react';
 
 import { SubPage } from '@/components/dashboard/sub-page';
 import { EmptyState } from '@/components/shared/empty-state';
@@ -33,50 +32,45 @@ export function WishlistView() {
       {items.length > 0 ? (
         <ul
           aria-busy={isLoading}
-          className='grid gap-4 sm:grid-cols-2 xl:grid-cols-3'
+          className='grid grid-cols-2 gap-x-5 gap-y-10 lg:grid-cols-3'
         >
           {items.map(item => {
             const product = item.product!;
             return (
-              <li
-                key={item._id}
-                className='group relative flex flex-col overflow-hidden rounded-2xl border bg-card transition-shadow hover:shadow-soft'
-              >
+              <li key={item._id} className='group flex flex-col'>
                 <Link
                   href={`/product/${product.slug}`}
-                  className='flex flex-1 flex-col focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none'
+                  className='flex flex-1 flex-col'
                 >
                   <ProductImage
                     product={product}
-                    sizes='(min-width: 1280px) 22vw, (min-width: 640px) 40vw, 90vw'
-                    className='aspect-[4/3]'
+                    sizes='(min-width: 1024px) 24vw, 45vw'
+                    className='border'
                     imageClassName='transition-transform duration-500 group-hover:scale-105'
                   />
-                  <span className='flex flex-1 flex-col gap-1 p-4'>
-                    <span className='line-clamp-2 leading-snug font-medium'>
-                      {product.name}
-                    </span>
-                    <span className='font-semibold text-primary'>
-                      {formatPrice(product.price)}
-                    </span>
-                    <span className='mt-auto pt-2 text-xs text-muted-foreground'>
-                      {item.created
-                        ? `Wishlist added on ${formatDate(item.created)}`
-                        : 'Saved to your wishlist'}
-                    </span>
+                  <span className='mt-3 line-clamp-2 leading-snug font-semibold group-hover:underline'>
+                    {product.name}
+                  </span>
+                  <span className='tabular mt-1 font-heading text-2xl leading-none font-semibold'>
+                    {formatPrice(product.price)}
+                  </span>
+                  <span className='meta mt-2'>
+                    {item.created
+                      ? `Added ${formatDate(item.created)}`
+                      : 'Saved to your wishlist'}
                   </span>
                 </Link>
                 <Button
-                  variant='secondary'
-                  size='icon-sm'
-                  className='absolute top-3 right-3 rounded-full shadow-sm'
+                  variant='link'
+                  size='sm'
+                  className='mt-2 h-auto self-start px-0 py-1 text-muted-foreground hover:text-destructive'
                   aria-label={`Remove ${product.name} from your wishlist`}
                   onClick={() =>
                     product._id &&
                     dispatch(updateWishlist(!item.isLiked, product._id))
                   }
                 >
-                  <X />
+                  Remove
                 </Button>
               </li>
             );
@@ -86,7 +80,6 @@ export function WishlistView() {
         <ListSkeleton rows={3} />
       ) : (
         <EmptyState
-          icon={HeartOff}
           message='You have no items in your wishlist yet.'
           description='Tap the heart on any product to save it here.'
           action={

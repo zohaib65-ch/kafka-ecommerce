@@ -1,11 +1,10 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { MessagesSquare } from 'lucide-react';
 
 import { EmptyState } from '@/components/shared/empty-state';
 import { formatTime } from '@/lib/format';
-import { cn, getAvatarColor } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 import type { SupportMessage } from './types';
 
@@ -29,10 +28,9 @@ export function MessageList({ messages, myId }: MessageListProps) {
     return (
       <div className='flex flex-1 items-center justify-center p-6'>
         <EmptyState
-          icon={MessagesSquare}
           message='No messages found.'
           description='Say hello to start the conversation.'
-          className='border-0 bg-transparent'
+          className='border-0'
         />
       </div>
     );
@@ -55,53 +53,31 @@ export function MessageList({ messages, myId }: MessageListProps) {
           <div
             key={message.id}
             className={cn(
-              'flex gap-2',
-              isMe ? 'justify-end' : 'justify-start',
-              !noHeader && index > 0 && 'pt-3'
+              'flex flex-col',
+              isMe ? 'items-end' : 'items-start',
+              !noHeader && index > 0 && 'pt-4'
             )}
           >
-            {!isMe && (
-              <div className='w-8 shrink-0'>
-                {!noHeader && (
-                  <span
-                    aria-hidden='true'
-                    className='grid size-8 place-items-center rounded-full text-xs font-semibold text-white'
-                    style={{ backgroundColor: getAvatarColor(message.from) }}
-                  >
-                    {message.user?.name?.charAt(0).toUpperCase()}
-                  </span>
+            {!noHeader && (
+              <p className='meta mb-1 flex items-center gap-2'>
+                {!isMe && (
+                  <span className='text-foreground'>{message.user?.name}</span>
                 )}
-              </div>
+                <time dateTime={new Date(message.time).toISOString()}>
+                  {formatTime(message.time)}
+                </time>
+              </p>
             )}
-            <div
+            <p
               className={cn(
-                'flex max-w-[80%] flex-col',
-                isMe ? 'items-end' : 'items-start'
+                'max-w-[85%] px-3.5 py-2 leading-relaxed break-words whitespace-pre-wrap sm:max-w-[75%]',
+                isMe
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground'
               )}
             >
-              {!noHeader && (
-                <p className='mb-1 flex items-center gap-2 text-xs text-muted-foreground'>
-                  {!isMe && (
-                    <span className='font-medium text-foreground'>
-                      {message.user?.name}
-                    </span>
-                  )}
-                  <time dateTime={new Date(message.time).toISOString()}>
-                    {formatTime(message.time)}
-                  </time>
-                </p>
-              )}
-              <p
-                className={cn(
-                  'rounded-2xl px-4 py-2 text-sm leading-relaxed break-words whitespace-pre-wrap',
-                  isMe
-                    ? 'rounded-br-md bg-primary text-primary-foreground'
-                    : 'rounded-bl-md bg-muted'
-                )}
-              >
-                {message.value}
-              </p>
-            </div>
+              {message.value}
+            </p>
           </div>
         );
       })}

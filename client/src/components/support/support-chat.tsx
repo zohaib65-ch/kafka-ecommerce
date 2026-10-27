@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, MessagesSquare, PlugZap, Users } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 import { EmptyState } from '@/components/shared/empty-state';
 import { PageLoader } from '@/components/shared/loading';
 import { useSocket } from '@/components/providers/socket-provider';
 import { Button } from '@/components/ui/button';
-import { cn, getAvatarColor } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { useAppSelector } from '@/store/hooks';
 
 import { MessageComposer } from './message-composer';
@@ -149,7 +149,6 @@ export function SupportChat() {
   if (!socket) {
     return (
       <EmptyState
-        icon={PlugZap}
         message='Not connected.'
         description='Connecting to support…'
       />
@@ -163,11 +162,11 @@ export function SupportChat() {
   }
 
   if (users.length === 0) {
-    return <EmptyState icon={Users} message='No users connected.' />;
+    return <EmptyState message='No users connected.' />;
   }
 
   return (
-    <div className='grid h-[calc(100dvh-16rem)] max-h-[46rem] min-h-[26rem] overflow-hidden rounded-2xl border bg-card shadow-soft md:grid-cols-[18rem_minmax(0,1fr)]'>
+    <div className='grid h-[calc(100dvh-22rem)] max-h-[46rem] min-h-[26rem] overflow-hidden border bg-card md:grid-cols-[18rem_minmax(0,1fr)]'>
       <aside
         aria-label='Conversations'
         className={cn(
@@ -175,9 +174,7 @@ export function SupportChat() {
           selectedUser && 'hidden md:block'
         )}
       >
-        <h2 className='px-5 pt-4 pb-1 text-xs font-semibold tracking-widest text-muted-foreground uppercase'>
-          Conversations
-        </h2>
+        <h2 className='meta border-b px-4 py-3 font-sans'>Conversations</h2>
         <UserList
           users={users}
           selectedId={selectedUser?.id ?? null}
@@ -205,18 +202,11 @@ export function SupportChat() {
               >
                 <ArrowLeft />
               </Button>
-              <span
-                aria-hidden='true'
-                className='grid size-9 place-items-center rounded-full text-sm font-semibold text-white'
-                style={{ backgroundColor: getAvatarColor(selectedUser.id) }}
-              >
-                {selectedUser.name.charAt(0).toUpperCase()}
-              </span>
               <div className='min-w-0'>
-                <h3 className='truncate text-sm font-semibold'>
+                <h3 className='truncate font-heading text-2xl leading-none font-semibold uppercase'>
                   {selectedUser.name}
                 </h3>
-                <p className='text-xs text-muted-foreground'>
+                <p className='meta mt-1'>
                   {selectedUser.online ? 'Online' : 'Offline'}
                 </p>
               </div>
@@ -227,9 +217,8 @@ export function SupportChat() {
         ) : (
           <div className='flex flex-1 items-center justify-center p-6'>
             <EmptyState
-              icon={MessagesSquare}
               message='Select chat to start messaging'
-              className='border-0 bg-transparent'
+              className='border-0'
             />
           </div>
         )}

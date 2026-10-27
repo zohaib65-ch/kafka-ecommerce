@@ -3,8 +3,6 @@ import { cn } from '@/lib/utils';
 type PageHeaderProps = {
   title: React.ReactNode;
   description?: React.ReactNode;
-  /** @deprecated Eyebrow labels are no longer part of the design; the prop is ignored. */
-  eyebrow?: React.ReactNode;
   actions?: React.ReactNode;
   className?: string;
 };

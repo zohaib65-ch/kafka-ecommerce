@@ -50,14 +50,12 @@ export function ResetPasswordForm({ mode, onSubmit }: ResetPasswordFormProps) {
           control={form.control}
           name='password'
           label={isToken ? 'Password' : 'Current password'}
-          placeholder={isToken ? 'Password' : 'Current password'}
           autoComplete={isToken ? 'new-password' : 'current-password'}
         />
         <PasswordField
           control={form.control}
           name='confirmPassword'
           label={isToken ? 'Confirm password' : 'New password'}
-          placeholder={isToken ? 'Confirm password' : 'New password'}
           autoComplete='new-password'
         />
       </div>

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
 import { AuthShell } from '@/components/auth/auth-shell';
 import { RegisterForm } from '@/components/auth/register-form';
+import { TextLink } from '@/components/auth/text-link';
 import { GuestOnly } from '@/components/shared/auth-guard';
 
 export const metadata: Metadata = {
@@ -16,16 +16,11 @@ export default function RegisterPage() {
     <GuestOnly>
       <AuthShell
         title='Sign Up'
-        description='Create your account to track orders, save favorites and check out faster.'
+        description='An account lets you track your orders and keep a wishlist.'
         footer={
           <p>
             Already have an account?{' '}
-            <Link
-              href='/login'
-              className='font-medium text-primary hover:underline'
-            >
-              Back to login
-            </Link>
+            <TextLink href='/login'>Back to login</TextLink>
           </p>
         }
       >

@@ -18,18 +18,18 @@ type ProductCardProps = {
   className?: string;
 };
 
+/** A flat grid cell: photo, brand, name and price. The grid draws the rules between cells. */
 export function ProductCard({
   product,
   priority,
   className
 }: ProductCardProps) {
-  const hasBrand = !!product.brand?.name;
   const reviewCount = product.totalReviews ?? 0;
 
   return (
     <article
       className={cn(
-        'group relative flex h-full flex-col overflow-hidden rounded-2xl border bg-card shadow-soft transition-shadow duration-300 hover:shadow-lift',
+        'group relative flex h-full flex-col bg-background p-3 transition-colors hover:bg-card sm:p-4',
         className
       )}
     >
@@ -38,48 +38,45 @@ export function ProductCard({
           product={product}
           priority={priority}
           sizes='(min-width: 1280px) 22vw, (min-width: 768px) 30vw, 50vw'
-          imageClassName='transition-transform duration-500 group-hover:scale-105'
+          className='border'
         />
         <WishlistButton
           productId={product._id}
           productName={product.name}
           liked={product.isLiked ?? false}
-          className='absolute top-2.5 right-2.5 z-10'
+          className='absolute top-2 right-2 z-10'
         />
       </div>
 
-      <div className='flex flex-1 flex-col gap-1 p-3.5 sm:p-4'>
-        {hasBrand && (
+      <div className='mt-3 flex flex-1 flex-col gap-1'>
+        {product.brand?.name && (
           <p className='line-clamp-1 text-xs text-muted-foreground'>
-            By{' '}
-            <span className='font-medium text-primary'>
-              {product.brand?.name}
-            </span>
+            {product.brand.name}
           </p>
         )}
-        <h3 className='font-heading text-sm leading-snug font-semibold sm:text-base'>
+        <h3 className='text-base leading-snug'>
           <Link
             href={`/product/${product.slug}`}
             onClick={() => trackProductClick(product)}
-            className='after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:ring-3 focus-visible:after:ring-ring/60'
+            className='underline decoration-transparent decoration-2 underline-offset-4 group-hover:decoration-brand after:absolute after:inset-0 focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-ring'
           >
             <span className='line-clamp-2'>{product.name}</span>
           </Link>
         </h3>
-        <p className='line-clamp-2 text-xs text-muted-foreground sm:text-sm'>
-          {product.description}
-        </p>
 
-        <div className='mt-auto flex items-end justify-between gap-2 pt-3'>
-          <p className='text-base font-semibold sm:text-lg'>
+        <div className='mt-auto flex items-end justify-between gap-2 pt-2'>
+          <p className='tabular font-heading text-2xl leading-none font-semibold'>
             {formatPrice(product.price)}
           </p>
           {reviewCount > 0 && (
             <p
-              className='flex items-center gap-1 text-sm font-medium'
+              className='tabular flex items-center gap-1 text-sm font-semibold'
               aria-label={`Rated ${Number(product.averageRating ?? 0).toFixed(1)} out of 5 from ${reviewCount} reviews`}
             >
-              <Star className='size-4 fill-star text-star' aria-hidden='true' />
+              <Star
+                className='size-3.5 fill-star text-star'
+                aria-hidden='true'
+              />
               {Number(product.averageRating ?? 0).toFixed(1)}
             </p>
           )}

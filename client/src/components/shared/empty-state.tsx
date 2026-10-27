@@ -5,8 +5,6 @@ type EmptyStateProps = {
   title?: React.ReactNode;
   message?: React.ReactNode;
   description?: React.ReactNode;
-  /** @deprecated Empty states no longer show an icon; the prop is ignored. */
-  icon?: unknown;
   action?: React.ReactNode;
   className?: string;
 };

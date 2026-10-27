@@ -10,8 +10,7 @@ import {
 
 export const metadata: Metadata = {
   title: 'Sell With Us',
-  description:
-    'Become a Marketlane seller. Apply today and grow your business with Marketlane.'
+  description: 'Apply to list your products on Marketlane under your own brand.'
 };
 
 export default function SellPage() {
@@ -21,7 +20,7 @@ export default function SellPage() {
       <SellBenefits />
       <SellSteps />
       <SellApply>
-        <MerchantApplicationForm submitLabel='Submit' />
+        <MerchantApplicationForm submitLabel='Send application' />
       </SellApply>
     </>
   );
